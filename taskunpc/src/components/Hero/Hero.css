@@ -1,0 +1,97 @@
+.hero {
+  background: linear-gradient(160deg, #eaf6ff 0%, #ffffff 65%);
+  padding: 90px 40px 80px;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: #c5e8fb;
+  color: #185fa5;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 18px;
+  border-radius: 20px;
+  margin-bottom: 26px;
+}
+
+.hero h1 {
+  font-family: "Raleway", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  max-width: 640px;
+  margin: 0 auto 18px;
+  color: #1e3a4f;
+}
+
+.hero h1 span {
+  color: #2e9cdb;
+}
+
+.hero p {
+  font-size: 1rem;
+  color: #4a6278;
+  max-width: 500px;
+  margin: 0 auto 36px;
+  line-height: 1.8;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-btn-primary {
+  background: #5bb8f5;
+  color: #ffffff;
+  padding: 13px 28px;
+  border-radius: 10px;
+  border: none;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+
+.hero-btn-primary:hover {
+  background: #2e9cdb;
+}
+
+.hero-btn-outline {
+  background: transparent;
+  border: 2px solid #5bb8f5;
+  color: #2e9cdb;
+  padding: 13px 28px;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.hero-btn-outline:hover {
+  background: #eaf6ff;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 60px 24px 60px;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+}

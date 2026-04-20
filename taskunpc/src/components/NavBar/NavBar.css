@@ -1,0 +1,183 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 68px;
+  padding: 0 40px;
+  background: #ffffff;
+  border-bottom: 1.5px solid #e2eaf4;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-family: "Raleway", sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #1e3a4f;
+}
+
+.navbar-logo-icon {
+  width: 38px;
+  height: 38px;
+  background: #5bb8f5;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.navbar-logo span {
+  color: #5bb8f5;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #4a6278;
+  transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+  color: #2e9cdb;
+}
+
+.navbar-btn {
+  background: #5bb8f5;
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.navbar-btn:hover {
+  background: #2e9cdb;
+}
+
+.navbar-links a {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #4a6278;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+  color: #2e9cdb;
+}
+
+.navbar-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+
+.navbar-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background: #1e3a4f;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.navbar-mobile {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff;
+  padding: 16px 24px;
+  border-top: 1.5px solid #e2eaf4;
+}
+
+.navbar-mobile.open {
+  display: flex;
+}
+
+.navbar-mobile a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #4a6278;
+  padding: 8px 0;
+  border-bottom: 1px solid #e2eaf4;
+}
+
+.navbar-mobile a:hover {
+  color: #2e9cdb;
+}
+
+.navbar-mobile .navbar-btn {
+  width: 100%;
+  margin-top: 8px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none;
+  }
+
+  .navbar-btn-desktop {
+    display: none;
+  }
+
+  .navbar-hamburger {
+    display: flex;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navbar-mobile.open {
+  display: flex;
+  animation: slideDown 0.35s ease-out;
+}
+
+.navbar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: 68px;
+  background: rgba(30, 58, 79, 0.4);
+  z-index: 99;
+}
+
+.navbar-overlay.open {
+  display: block;
+}
+
+.navbar-mobile {
+  position: relative;
+  z-index: 100;
+}
