@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaPaw } from "react-icons/fa";
 import "./Registro.css";
 import Logo from "../../components/Logo/Logo";
@@ -14,22 +14,53 @@ const Registro = () => {
     contrasena: "",
     confirmContrasena: "",
   });
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setError("");
   };
   const [error, setError] = useState("");
-
-  const handleSubmit = (e) => {
+  const [exito, setExito] = useState("");
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("form enviado");
+
     if (form.contrasena !== form.confirmContrasena) {
       setError("Las contraseñas no coinciden");
       return;
     }
 
-    console.log("Datos del registro:", form);
-    // aquí después conectamos con FastAPI
+    console.log("datos ", form);
+
+    try {
+      const respuesta = await fetch("http://localhost:8000/propietarios", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cedula: form.cedula,
+          nombreCompleto: form.nombreCompleto,
+          telefono: form.telefono,
+          sexo: form.sexo,
+          email: form.correo,
+          contraseña: form.contrasena,
+        }),
+      });
+      console.log("respuesta status ", respuesta.status);
+
+      const datos = await respuesta.json();
+      console.log("datos respuesta ", datos);
+
+      if (respuesta.ok) {
+        setExito("¡Cuenta creada exitosamente! Redirigiendo...");
+        setTimeout(() => navigate("/login"), 2000);
+      } else {
+        setError(datos.detail || "Error al conectar con el servidor");
+      }
+    } catch (error) {
+      console.log("error ", error);
+
+      setError("Error al conectar con el servdor");
+    }
   };
 
   return (
@@ -140,6 +171,20 @@ const Registro = () => {
               }}
             >
               {error}
+            </p>
+          )}
+          {exito && (
+            <p
+              style={{
+                color: "#1e8449",
+                background: "#e8f8f0",
+                padding: "10px 14px",
+                borderRadius: "8px",
+                fontSize: "0.85rem",
+                marginTop: "16px",
+              }}
+            >
+              {exito}
             </p>
           )}
           <button type="submit" className="registro-btn">
