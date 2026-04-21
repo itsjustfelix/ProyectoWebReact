@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../../assets/logo.png";
 import "./NavBar.css";
+import Logo from "../../Logo/Logo";
 
 const NavBar = () => {
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -10,11 +10,7 @@ const NavBar = () => {
   return (
     <div className="navbar-wrapper">
       <nav className="navbar">
-        <Link to="/" className="navbar-logo">
-          <img src={logo} alt="MyVet" style={{ height: "36px" }} />
-          My<span>Vet</span>
-        </Link>
-
+        <Logo />
         <ul className="navbar-links">
           <li>
             <Link to="/">Inicio</Link>

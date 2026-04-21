@@ -1,0 +1,121 @@
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #eaf6ff 0%, #ffffff 65%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.login-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(91, 184, 245, 0.2);
+  padding: 48px 44px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+  text-decoration: none;
+  font-family: "Raleway", sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #1e3a4f;
+}
+
+.login-logo span {
+  color: #5bb8f5;
+}
+
+.login-card h2 {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.5rem;
+  margin-top: 32px;
+  font-weight: 800;
+  color: #1e3a4f;
+  margin-bottom: 8px;
+}
+
+.login-card .login-sub {
+  font-size: 0.88rem;
+  color: #4a6278;
+  margin-bottom: 32px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #4a6278;
+  margin-bottom: 7px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.8px solid #e2eaf4;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-size: 0.95rem;
+  color: #1e3a4f;
+  background: #f4f7fa;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.form-group input:focus {
+  border-color: #5bb8f5;
+  background: #ffffff;
+}
+
+.login-btn {
+  width: 100%;
+  background: #5bb8f5;
+  color: #ffffff;
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+.login-btn:hover {
+  background: #2e9cdb;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 0.85rem;
+  color: #4a6278;
+}
+
+.login-footer a {
+  color: #2e9cdb;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 32px 24px;
+  }
+}
