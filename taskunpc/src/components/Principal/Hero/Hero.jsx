@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Hero.css";
-
+import { FaPaw } from "react-icons/fa";
 const Hero = () => {
   return (
     <section className="hero">
       <span className="hero-badge">
-        🐾 La veterinaria de tu barrio, ahora en línea
+        <FaPaw /> La veterinaria de tu barrio, ahora en línea
       </span>
 
       <h1>

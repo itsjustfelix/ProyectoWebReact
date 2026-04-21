@@ -84,11 +84,12 @@
 }
 
 .navbar-hamburger {
+  top: auto;
   display: none;
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
-  background: none;
+  background: white;
   border: none;
   padding: 4px;
 }
@@ -103,16 +104,43 @@
 }
 
 .navbar-mobile {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 8px;
   background: #fff;
-  padding: 16px 24px;
-  border-top: 1.5px solid #e2eaf4;
+  padding: 0px 24px;
+  border-bottom: 1.5px solid #e2eaf4;
+  border-radius: 0 0 20px 20px;
+  position: absolute;
+  top: 68px;
+  left: 0;
+  width: 100%;
+  z-index: 101;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+
+  transition:
+    max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s ease,
+    padding 0.25s ease,
+    visibility 0.25s;
 }
 
 .navbar-mobile.open {
-  display: flex;
+  max-height: 500px;
+  opacity: 1;
+  padding: 16px 24px;
+  pointer-events: auto;
+  visibility: visible;
+  transition:
+    max-height 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 0.2s ease,
+    padding 0.3s ease;
 }
 
 .navbar-mobile a {
@@ -159,25 +187,22 @@
   }
 }
 
-.navbar-mobile.open {
-  display: flex;
-  animation: slideDown 0.35s ease-out;
-}
-
 .navbar-overlay {
-  display: none;
+  display: block;
   position: fixed;
   inset: 0;
   top: 68px;
   background: rgba(30, 58, 79, 0.4);
   z-index: 99;
+
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s;
 }
 
 .navbar-overlay.open {
-  display: block;
-}
-
-.navbar-mobile {
-  position: relative;
-  z-index: 100;
+  opacity: 1;
+  visibility: visible;
 }

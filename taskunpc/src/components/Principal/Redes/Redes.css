@@ -1,0 +1,76 @@
+.redes {
+  padding: 70px 40px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.redes h2 {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1e3a4f;
+  margin-bottom: 10px;
+}
+
+.redes-sub {
+  color: #4a6278;
+  font-size: 0.92rem;
+  margin-bottom: 44px;
+}
+
+.redes-grid {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.red-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: 1.5px solid #e2eaf4;
+  background: #f4f7fa;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #1e3a4f;
+  text-decoration: none;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+
+.red-btn:hover {
+  background: #eaf6ff;
+  border-color: #c5e8fb;
+  transform: translateY(-2px);
+}
+
+.red-btn span {
+  font-size: 1.3rem;
+}
+
+@media (max-width: 768px) {
+  .redes {
+    padding: 50px 24px;
+  }
+
+  .redes-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .red-btn {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+
+  .redes h2 {
+    font-size: 1.4rem;
+  }
+}
