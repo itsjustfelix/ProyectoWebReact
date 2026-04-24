@@ -6,7 +6,8 @@ const Hero = () => {
   return (
     <section className="hero">
       <span className="hero-badge">
-        <FaPaw /> La veterinaria de tu barrio, ahora en línea
+        <FaPaw /> <span></span>
+        La veterinaria de tu barrio, ahora en línea
       </span>
 
       <h1>

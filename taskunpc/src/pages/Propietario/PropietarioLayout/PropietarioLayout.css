@@ -1,0 +1,12 @@
+.propietario-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.propietario-contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f4f7fa;
+  overflow: auto;
+}

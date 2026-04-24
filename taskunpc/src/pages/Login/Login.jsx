@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import Logo from "../../components/Logo/Logo";
+import { login } from "../../services/loginService";
 const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -11,29 +12,24 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const respuesta = await fetch("http://localhost:8000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email,
-          contraseña: password,
-        }),
-      });
+      const datos = await login(email, password);
 
-      const datos = await respuesta.json();
-      if (respuesta.ok) {
-        localStorage.setItem("token", datos.token);
-        localStorage.setItem("rol", datos.rol);
-      }
+      localStorage.setItem("token", datos.token);
+      localStorage.setItem("rol", datos.rol);
+      localStorage.setItem("nombre", datos.nombre);
+      localStorage.setItem("codigo_usuario", datos.codigo_usuario);
 
-      if (datos.rol === "1") navigate("/admin");
-      if (datos.rol === "2") navigate("/veterinario");
-      if (datos.rol === "3") navigate("/propietario");
-      else {
-        setError(datos.detail || "Credenciales incorrectas");
-      }
+      const rutas = {
+        1: "/admin",
+        2: "/veterinario",
+        3: "/propietario",
+      };
+
+      navigate(rutas[datos.rol]);
     } catch (error) {
-      setError("Error al conectar con el servidor ->", error.value);
+      const mensajeError =
+        error.response?.data?.detail || "Error al conectar con el servidor";
+      setError(mensajeError);
     }
   };
 

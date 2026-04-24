@@ -1,0 +1,169 @@
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: #ffffff;
+  border-right: 1.5px solid #e2eaf4;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  transition: width 0.3s ease;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  height: 68px;
+  border-bottom: 1.5px solid #e2eaf4;
+}
+
+.sidebar-section {
+  padding: 16px 20px 6px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #9bb3cc;
+}
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 20px;
+  margin: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: #4a6278;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  text-decoration: none;
+}
+
+.sidebar-nav-item:hover {
+  background: #eaf6ff;
+  color: #2e9cdb;
+}
+
+.sidebar-nav-item.active {
+  background: #5bb8f5;
+  color: #ffffff;
+}
+
+.sidebar-nav-icon {
+  font-size: 1rem;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px;
+  border-top: 1.5px solid #e2eaf4;
+}
+
+.sidebar-user-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #eaf6ff;
+  margin-bottom: 10px;
+}
+
+.sidebar-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #5bb8f5;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.sidebar-user-info .sidebar-uname {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #1e3a4f;
+}
+
+.sidebar-user-info .sidebar-urole {
+  font-size: 0.72rem;
+  color: #4a6278;
+}
+
+.sidebar-logout {
+  width: 100%;
+  background: #ffe5e5;
+  color: #c0392b;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sidebar-logout:hover {
+  background: #ffc5c5;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 64px;
+  }
+
+  .sidebar-brand {
+    justify-content: center;
+    padding: 14px 0;
+    height: 68px;
+  }
+
+  .sidebar-section {
+    display: none;
+  }
+
+  .sidebar-label {
+    display: none;
+  }
+
+  .sidebar-nav-item {
+    justify-content: center;
+    padding: 11px 0;
+    margin: 2px 6px;
+  }
+
+  .sidebar-user-chip {
+    justify-content: center;
+    padding: 10px 0;
+  }
+
+  .sidebar-user-info {
+    display: none;
+  }
+
+  .sidebar-logout {
+    padding: 10px 0;
+  }
+}

@@ -1,0 +1,132 @@
+.dashboard-topbar {
+  background: #ffffff;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  border-bottom: 1.5px solid #e2eaf4;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.dashboard-topbar h2 {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e3a4f;
+}
+
+.dashboard-content {
+  padding: 28px 32px;
+  flex: 1;
+}
+
+.dashboard-greeting {
+  margin-bottom: 28px;
+}
+
+.dashboard-greeting h1 {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e3a4f;
+  margin-bottom: 4px;
+}
+
+.dashboard-greeting p {
+  font-size: 0.88rem;
+  color: #4a6278;
+}
+
+.dashboard-section-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+  border: 1.5px solid #e2eaf4;
+  box-shadow: 0 2px 10px rgba(91, 184, 245, 0.08);
+}
+
+.dashboard-section-card h3 {
+  font-family: "Raleway", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e3a4f;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard-table th {
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #4a6278;
+  padding: 10px 14px;
+  border-bottom: 2px solid #e2eaf4;
+}
+
+.dashboard-table td {
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  border-bottom: 1px solid #e2eaf4;
+  color: #1e3a4f;
+}
+
+.dashboard-table tr:last-child td {
+  border-bottom: none;
+}
+
+.dashboard-table tr:hover td {
+  background: #f4f7fa;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.badge-blue {
+  background: #eaf6ff;
+  color: #2e9cdb;
+}
+.badge-yellow {
+  background: #fef9e5;
+  color: #b7770d;
+}
+.badge-green {
+  background: #e8f8f0;
+  color: #1e8449;
+}
+.badge-red {
+  background: #ffe5e5;
+  color: #c0392b;
+}
+
+.dashboard-empty {
+  text-align: center;
+  padding: 40px;
+  color: #4a6278;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-topbar {
+    padding: 0 16px;
+  }
+  .dashboard-content {
+    padding: 20px 16px;
+  }
+}

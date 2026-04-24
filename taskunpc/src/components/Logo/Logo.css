@@ -1,17 +1,20 @@
 .logo {
   display: flex;
   align-items: center;
+  gap: 4px;
   text-decoration: none;
   font-family: "Raleway", sans-serif;
   font-weight: 800;
   font-size: 1.2rem;
   color: #1e3a4f;
+  overflow: hidden;
 }
 
-.logo-img {
-  height: 36px;
+.logo-nombre {
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.logo span {
+.logo-nombre span {
   color: #5bb8f5;
 }

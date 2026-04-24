@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaPaw } from "react-icons/fa";
 import "./Registro.css";
 import Logo from "../../components/Logo/Logo";
+import { registrarPropietario } from "../../services/propietarioService";
 
 const Registro = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [exito, setExito] = useState("");
   const [form, setForm] = useState({
     nombreCompleto: "",
     cedula: "",
@@ -14,52 +17,30 @@ const Registro = () => {
     contrasena: "",
     confirmContrasena: "",
   });
-  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setError("");
+    if (error) setError("");
   };
-  const [error, setError] = useState("");
-  const [exito, setExito] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("form enviado");
 
     if (form.contrasena !== form.confirmContrasena) {
-      setError("Las contraseñas no coinciden");
-      return;
+      return setError("Las contraseñas no coinciden");
     }
 
-    console.log("datos ", form);
-
     try {
-      const respuesta = await fetch("http://localhost:8000/propietarios", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          cedula: form.cedula,
-          nombreCompleto: form.nombreCompleto,
-          telefono: form.telefono,
-          sexo: form.sexo,
-          email: form.correo,
-          contraseña: form.contrasena,
-        }),
-      });
-      console.log("respuesta status ", respuesta.status);
+      await registrarPropietario(form);
 
-      const datos = await respuesta.json();
-      console.log("datos respuesta ", datos);
+      setExito("¡Cuenta creada exitosamente! Redirigiendo...");
+      setError("");
 
-      if (respuesta.ok) {
-        setExito("¡Cuenta creada exitosamente! Redirigiendo...");
-        setTimeout(() => navigate("/login"), 2000);
-      } else {
-        setError(datos.detail || "Error al conectar con el servidor");
-      }
-    } catch (error) {
-      console.log("error ", error);
-
-      setError("Error al conectar con el servdor");
+      setTimeout(() => navigate("/login"), 2000);
+    } catch (err) {
+      const msg =
+        err.response?.data?.detail || "Error al conectar con el servidor";
+      setError(Array.isArray(msg) ? msg[0].msg : msg);
     }
   };
 
@@ -74,15 +55,16 @@ const Registro = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="registro-grid">
+            {/* Campos de texto */}
             <div className="form-group">
               <label>Nombre completo</label>
               <input
                 type="text"
                 name="nombreCompleto"
-                placeholder="Ej: Carlos Pérez"
                 value={form.nombreCompleto}
                 onChange={handleChange}
                 required
+                placeholder="Ej: Carlos Pérez"
               />
             </div>
 
@@ -91,10 +73,10 @@ const Registro = () => {
               <input
                 type="text"
                 name="cedula"
-                placeholder="Ej: 1234567890"
                 value={form.cedula}
                 onChange={handleChange}
                 required
+                placeholder="Ej: 123456"
               />
             </div>
 
@@ -103,10 +85,10 @@ const Registro = () => {
               <input
                 type="tel"
                 name="telefono"
-                placeholder="Ej: 3001234567"
                 value={form.telefono}
                 onChange={handleChange}
                 required
+                placeholder="300..."
               />
             </div>
 
@@ -129,10 +111,10 @@ const Registro = () => {
               <input
                 type="email"
                 name="correo"
-                placeholder="tucorreo@ejemplo.com"
                 value={form.correo}
                 onChange={handleChange}
                 required
+                placeholder="correo@ejemplo.com"
               />
             </div>
 
@@ -141,52 +123,27 @@ const Registro = () => {
               <input
                 type="password"
                 name="contrasena"
-                placeholder="Ingrese su contraseña"
                 value={form.contrasena}
                 onChange={handleChange}
                 required
               />
             </div>
+
             <div className="form-group form-group-full">
               <label>Confirme la Contraseña</label>
               <input
                 type="password"
                 name="confirmContrasena"
-                placeholder="Confirme su contraseña"
                 value={form.confirmContrasena}
                 onChange={handleChange}
                 required
               />
             </div>
           </div>
-          {error && (
-            <p
-              style={{
-                color: "#c0392b",
-                background: "#ffe5e5",
-                padding: "10px 14px",
-                borderRadius: "8px",
-                fontSize: "0.85rem",
-                marginTop: "16px",
-              }}
-            >
-              {error}
-            </p>
-          )}
-          {exito && (
-            <p
-              style={{
-                color: "#1e8449",
-                background: "#e8f8f0",
-                padding: "10px 14px",
-                borderRadius: "8px",
-                fontSize: "0.85rem",
-                marginTop: "16px",
-              }}
-            >
-              {exito}
-            </p>
-          )}
+
+          {error && <p className="msg-error">{error}</p>}
+          {exito && <p className="msg-exito">{exito}</p>}
+
           <button type="submit" className="registro-btn">
             Crear cuenta
           </button>
