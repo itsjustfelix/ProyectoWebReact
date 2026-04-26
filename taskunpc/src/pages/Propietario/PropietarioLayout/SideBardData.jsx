@@ -5,12 +5,11 @@ export const links = [
     to: "/propietario/mascotas",
     icono: <FaPaw size={16} />,
     label: "Mis mascotas",
-    end: true,
   },
   {
     to: "/propietario/citas",
     icono: <FaCalendarAlt size={16} />,
-    label: "Mis citas",
+    label: "Citas",
   },
   {
     to: "/propietario/historial",

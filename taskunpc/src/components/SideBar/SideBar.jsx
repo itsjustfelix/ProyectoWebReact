@@ -4,11 +4,15 @@ import { FaSignOutAlt } from "react-icons/fa";
 import Logo from "../Logo/Logo";
 import "./Sidebar.css";
 
-const Sidebar = ({ links, usuario }) => {
+const Sidebar = ({ links, usuario, rol }) => {
   const navigate = useNavigate();
+  /**
+   * Esto lo que hace es que cada vez que la pagina cambie de tamaño se verifique si el tamaño de la
+   * pantalla es menor o igual a 768 esto porque a ese tamaño tenemos que la pagina sea responsive y
+   * que se ponga para tamaño de telefono. esto se utiliza basiocamente para cuando el sidebar este en
+   * modo pantalla pequeña, el componente logo solo muestre el logo mas no el nombre de la pagina
+   */
   const [esMobil, setEsMobil] = useState(window.innerWidth <= 768);
-  const rolUsuario = Number(localStorage.getItem("rol"));
-
   useEffect(() => {
     const handleResize = () => setEsMobil(window.innerWidth <= 768);
     window.addEventListener("resize", handleResize);
@@ -22,11 +26,7 @@ const Sidebar = ({ links, usuario }) => {
   lo que pasaria es que al darle click redigiria a la pagina principal de la
   pagina web */
   const rutaInicio =
-    rolUsuario === "1"
-      ? "/admin"
-      : rolUsuario === "2"
-        ? "/veterinario"
-        : "/propietario";
+    rol === "1" ? "/admin" : rol === "2" ? "/veterinario" : "/propietario";
   /**
    * como no se sabe si vamos a cargar imagenes de los usuarios, esta funcion lo que hace es tomar
    * las iniciales de los dos primeros nombres y esto se utiliza como imagen. si no encuentra un nombre

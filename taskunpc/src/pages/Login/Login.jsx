@@ -63,20 +63,7 @@ const Login = () => {
               required
             />
           </div>
-          {error && (
-            <p
-              style={{
-                color: "#c0392b",
-                background: "#ffe5e5",
-                padding: "10px 14px",
-                borderRadius: "8px",
-                fontSize: "0.85rem",
-                marginTop: "16px",
-              }}
-            >
-              {error}
-            </p>
-          )}
+          {error && <p className="msg-error">{error}</p>}
           <button type="submit" className="login-btn">
             Iniciar sesión
           </button>

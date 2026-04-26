@@ -15,7 +15,7 @@ const Registro = () => {
     sexo: "",
     correo: "",
     contrasena: "",
-    confirmContrasena: "",
+    confirmarContrasena: "",
   });
 
   const handleChange = (e) => {
@@ -33,8 +33,8 @@ const Registro = () => {
     try {
       await registrarPropietario(form);
 
-      setExito("¡Cuenta creada exitosamente! Redirigiendo...");
       setError("");
+      setExito("¡Cuenta creada exitosamente! Redirigiendo...");
 
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
@@ -55,7 +55,6 @@ const Registro = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="registro-grid">
-            {/* Campos de texto */}
             <div className="form-group">
               <label>Nombre completo</label>
               <input
@@ -134,7 +133,7 @@ const Registro = () => {
               <input
                 type="password"
                 name="confirmContrasena"
-                value={form.confirmContrasena}
+                value={form.confirmarContrasena}
                 onChange={handleChange}
                 required
               />

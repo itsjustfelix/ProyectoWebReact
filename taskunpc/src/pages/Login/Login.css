@@ -119,3 +119,12 @@
     padding: 32px 24px;
   }
 }
+
+.msg-error {
+  color: #c0392b;
+  background: #ffe5e5;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-top: 16px;
+}

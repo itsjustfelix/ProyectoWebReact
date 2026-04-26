@@ -1,53 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { FaPaw, FaPlus, FaEdit, FaTrash } from "react-icons/fa";
+import { getMascotasByPropietario } from "../../../services/mascotasService";
+import RegistrarMascota from "./RegistrarMascota/RegistrarMascota"; // Ajusta la ruta si es necesario
 import "./Mascotas.css";
 
 const Mascotas = () => {
-  const token = localStorage.getItem("token");
   const codigoUsuario = localStorage.getItem("codigo_usuario");
   const [mascotas, setMascotas] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [modalAbierto, setModalAbierto] = useState(false); // Estado para el modal
+
+  const traerMascotas = async () => {
+    try {
+      setCargando(true);
+      const datos = await getMascotasByPropietario(codigoUsuario);
+      setMascotas(Array.isArray(datos) ? datos : []);
+    } catch (error) {
+      console.error("Error al traer mascotas:", error);
+    } finally {
+      setCargando(false);
+    }
+  };
 
   useEffect(() => {
-    const traerMascotas = async () => {
-      try {
-        const respuesta = await fetch(
-          `http://localhost:8000/mascotas/propietario/${codigoUsuario}`,
-          { headers: { Authorization: `Bearer ${token}` } },
-        );
-        const datos = await respuesta.json();
-        setMascotas(datos);
-      } catch (error) {
-        console.error("Error al traer mascotas:", error);
-      } finally {
-        setCargando(false);
-      }
-    };
-    traerMascotas();
-  }, [token, codigoUsuario]);
+    if (codigoUsuario) traerMascotas();
+  }, [codigoUsuario]);
 
   const getIconoEspecie = (especie) => {
-    switch (especie?.toLowerCase()) {
-      case "canino":
-        return "🐶";
-      case "felino":
-        return "🐱";
-      case "ave":
-        return "🐦";
-      case "reptil":
-        return "🦎";
-      case "roedor":
-        return "🐹";
-      default:
-        return "🐾";
-    }
+    const iconos = {
+      canino: "🐶",
+      felino: "🐱",
+      ave: "🐦",
+      reptil: "🦎",
+      roedor: "🐹",
+    };
+    return iconos[especie?.toLowerCase()] || "🐾";
   };
 
   return (
     <>
       <div className="mascotas-topbar">
         <h2>Mis Mascotas</h2>
-        <button className="mascotas-btn-agregar">
+        <button
+          className="mascotas-btn-agregar"
+          onClick={() => setModalAbierto(true)}
+        >
           <FaPlus size={14} /> Agregar mascota
         </button>
       </div>
@@ -62,8 +59,8 @@ const Mascotas = () => {
           </div>
         ) : (
           <div className="mascotas-grid">
-            {mascotas.map((mascota, index) => (
-              <div className="mascota-card" key={index}>
+            {mascotas.map((mascota) => (
+              <div className="mascota-card" key={mascota.codigo || mascota.id}>
                 <div className="mascota-avatar">
                   {mascota.link_imagen ? (
                     <img src={mascota.link_imagen} alt={mascota.nombre} />
@@ -88,6 +85,13 @@ const Mascotas = () => {
           </div>
         )}
       </div>
+
+      {modalAbierto && (
+        <RegistrarMascota
+          onCerrar={() => setModalAbierto(false)}
+          onGuardado={traerMascotas}
+        />
+      )}
     </>
   );
 };

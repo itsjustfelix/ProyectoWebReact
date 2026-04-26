@@ -1,0 +1,192 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 58, 79, 0.4);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.foto-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  border: 2px dashed #e2eaf4;
+  border-radius: 12px;
+}
+
+.foto-preview {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #5bb8f5;
+}
+
+.foto-placeholder {
+  width: 120px;
+  height: 120px;
+  background: #f8fbff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9bb3cc;
+}
+
+.modal {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px 40px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 16px 60px rgba(30, 58, 79, 0.2);
+  animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.modal-header h3 {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e3a4f;
+}
+
+.modal-cerrar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #4a6278;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.modal-cerrar:hover {
+  color: #c0392b;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.modal-full {
+  grid-column: 1 / -1;
+}
+
+.modal-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-form-group label {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #4a6278;
+}
+
+.modal-form-group input,
+.modal-form-group select {
+  padding: 11px 14px;
+  border: 1.8px solid #e2eaf4;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-size: 0.9rem;
+  color: #1e3a4f;
+  background: #f4f7fa;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.modal-form-group input:focus,
+.modal-form-group select:focus {
+  border-color: #5bb8f5;
+  background: #ffffff;
+}
+
+.modal-form-group select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modal-acciones {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-guardar {
+  background: #5bb8f5;
+  color: #ffffff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-guardar:hover {
+  background: #2e9cdb;
+}
+
+.btn-cancelar-modal {
+  background: #f4f7fa;
+  color: #4a6278;
+  border: 1.5px solid #e2eaf4;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-cancelar-modal:hover {
+  background: #e2eaf4;
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 24px 20px;
+  }
+
+  .modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-full {
+    grid-column: 1;
+  }
+}

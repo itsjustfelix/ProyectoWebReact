@@ -40,6 +40,9 @@
 
 .mascotas-content {
   padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .mascotas-grid {
@@ -140,7 +143,11 @@
 }
 
 .mascotas-empty {
-  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 60px;
   color: #4a6278;
 }
