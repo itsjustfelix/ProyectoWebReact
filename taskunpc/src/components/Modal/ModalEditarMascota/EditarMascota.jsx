@@ -1,33 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
-import api from "../../../services/api";
 import "../Modal.css";
+import { getEspecies } from "../../../services/especieService";
+import { getRazasByCodigoEspecie } from "../../../services/razaService";
+import { updateMascota } from "../../../services/mascotasService";
 
 const ModalEditarMascota = ({ mascota, onCerrar, onEditado }) => {
   const [especies, setEspecies] = useState([]);
   const [razasFiltradas, setRazasFiltradas] = useState([]);
   const [form, setForm] = useState({
-    nombre: mascota.nombre || "",
-    codigo_especie: mascota.codigo_especie || "",
-    codigo_raza: mascota.codigo_raza || "",
+    nombre: mascota.nombre,
+    codigo_especie: mascota.codigo_especie,
+    codigo_raza: mascota.codigo_raza,
   });
 
   useEffect(() => {
-    const traerDatos = async () => {
+    const cargarTodo = async () => {
       try {
-        const resEspecies = await api.get("/especies");
-        setEspecies(resEspecies.data);
+        const resEspecies = await getEspecies();
+        setEspecies(
+          Array.isArray(resEspecies) ? resEspecies : resEspecies.data,
+        );
 
         if (mascota.codigo_especie) {
-          const resRazas = await api.get(`/razas/especie/${mascota.codigo_especie}`);
-          setRazasFiltradas(resRazas.data);
+          const resRazas = await getRazasByCodigoEspecie(
+            mascota.codigo_especie,
+          );
+          const listaRazas = Array.isArray(resRazas) ? resRazas : resRazas.data;
+          setRazasFiltradas(listaRazas);
+
+          setForm((prev) => ({
+            ...prev,
+            codigo_raza: mascota.codigo_raza,
+          }));
         }
       } catch (error) {
-        console.error("Error al traer datos:", error);
+        console.error("Error al precargar datos:", error);
       }
     };
-    traerDatos();
-  }, [mascota.codigo_especie]);
+
+    cargarTodo();
+  }, [mascota]);
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -35,8 +48,15 @@ const ModalEditarMascota = ({ mascota, onCerrar, onEditado }) => {
 
     if (name === "codigo_especie") {
       try {
-        const resRazas = await api.get(`/razas/especie/${value}`);
-        setRazasFiltradas(resRazas.data);
+        if (!value) {
+          setRazasFiltradas([]);
+          return;
+        }
+        const resRazas = await getRazasByCodigoEspecie(value);
+        const listaRazas = Array.isArray(resRazas)
+          ? resRazas
+          : resRazas.data || [];
+        setRazasFiltradas(listaRazas);
         setForm((prev) => ({ ...prev, codigo_raza: "" }));
       } catch (error) {
         console.error("Error al traer razas:", error);
@@ -47,12 +67,9 @@ const ModalEditarMascota = ({ mascota, onCerrar, onEditado }) => {
   const handleGuardar = async (e) => {
     e.preventDefault();
     try {
-      await api.put(`/mascotas/${mascota.codigo}`, {
-        nombre: form.nombre,
-        codigo_especie: form.codigo_especie,
-        codigo_raza: form.codigo_raza,
-      });
+      await updateMascota(mascota.codigo, form);
       onEditado();
+      onCerrar();
     } catch (error) {
       console.error("Error al editar mascota:", error);
     }
@@ -118,7 +135,11 @@ const ModalEditarMascota = ({ mascota, onCerrar, onEditado }) => {
           </div>
 
           <div className="modal-acciones">
-            <button type="button" className="btn-cancelar-modal" onClick={onCerrar}>
+            <button
+              type="button"
+              className="btn-cancelar-modal"
+              onClick={onCerrar}
+            >
               Cancelar
             </button>
             <button type="submit" className="btn-guardar">

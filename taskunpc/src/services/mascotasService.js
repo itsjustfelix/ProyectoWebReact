@@ -27,3 +27,8 @@ export const deleteMascota = async (codigoMascota) => {
   const respuesta = await api.delete(`/mascotas/${codigoMascota}`);
   return respuesta.data.message;
 };
+
+export const updateMascota = async (codigo_mascota, mascota) => {
+  const respuesta = await api.put(`/mascotas/${codigo_mascota}`, mascota);
+  return respuesta.data;
+};
