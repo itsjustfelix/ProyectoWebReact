@@ -22,3 +22,8 @@ export const uploadImagenMascota = async (archivo) => {
 
   return respuesta.data.codigo_imagen;
 };
+
+export const deleteMascota = async (codigoMascota) => {
+  const respuesta = await api.delete(`/mascotas/${codigoMascota}`);
+  return respuesta.data.message;
+};
