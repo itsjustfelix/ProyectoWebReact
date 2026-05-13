@@ -113,7 +113,7 @@ const Propietarios = () => {
 
       {propAEditar && (
         <ModalEditarPropietario
-          properinario={propAEditar}
+          propietario={propAEditar}
           onCerrar={() => setPopAEditar(null)}
           onEditado={() => {
             setPopAEditar(null);
@@ -124,7 +124,7 @@ const Propietarios = () => {
 
       {propAEliminar && (
         <ModalEliminarPropietario
-          properinario={propAEliminar}
+          propietario={propAEliminar}
           onCerrar={() => setPropAEliminar(null)}
           onEliminado={eliminarPropietario}
         />
