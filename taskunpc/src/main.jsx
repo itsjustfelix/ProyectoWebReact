@@ -9,6 +9,11 @@ import Mascotas from "./pages/Propietario/Mascotas/Mascotas";
 import Citas from "./pages/Propietario/Citas/Citas";
 import Historial from "./pages/Propietario/Historial/Historial";
 import PropietarioLayout from "./pages/Propietario/PropietarioLayout/PropietarioLayout";
+import AdminLayout from "./pages/Administrador/adminLayout/adminLayout";
+import AdminDashboard from "./pages/Administrador/Dashboard/AdminDashboard";
+import Veterinarios from "./pages/Administrador/Veterinario/Veterinario";
+import Propietarios from "./pages/Administrador/Propietario/Propietario";
+import Especie from "./pages/Administrador/Especie/Especie";
 import "./index.css";
 import "@fontsource/raleway/400.css";
 import "@fontsource/raleway/600.css";
@@ -28,6 +33,13 @@ createRoot(document.getElementById("root")).render(
           <Route path="mascotas" element={<Mascotas />} />
           <Route path="citas" element={<Citas />} />
           <Route path="historial" element={<Historial />} />
+        </Route>
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="veterinarios" element={<Veterinarios />} />
+          <Route path="propietarios" element={<Propietarios />} />
+          <Route path="especies" element={<Especie />} />
         </Route>
       </Routes>
     </BrowserRouter>

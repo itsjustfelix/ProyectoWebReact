@@ -122,6 +122,9 @@ const Mascotas = () => {
       </div>
 
       <div className="mascotas-content">
+        {/**
+         * Renderizado condifional
+         */}
         {cargando ? (
           <p className="mascotas-empty">Cargando mascotas...</p>
         ) : mascotas.length === 0 ? (

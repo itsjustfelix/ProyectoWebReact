@@ -1,0 +1,12 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f4f7fa;
+  overflow: auto;
+}

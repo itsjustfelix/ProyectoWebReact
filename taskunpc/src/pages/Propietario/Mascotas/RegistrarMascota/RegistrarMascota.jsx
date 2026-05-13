@@ -64,10 +64,10 @@ const RegistrarMascota = ({ onCerrar, onGuardado }) => {
   const handleGuardar = async (e) => {
     e.preventDefault();
     try {
-      let codigoImagen = null;
+      let linkImagen = null;
 
       if (fotoMascota) {
-        codigoImagen = await uploadImagenMascota(fotoMascota);
+        linkImagen = await uploadImagenMascota(fotoMascota);
       }
 
       const nuevaMascota = {
@@ -75,7 +75,7 @@ const RegistrarMascota = ({ onCerrar, onGuardado }) => {
         codigo_especie: form.codigo_especie,
         codigo_raza: form.codigo_raza,
         codigo_propietario: codigoUsuario,
-        codigo_imagen: codigoImagen,
+        link_imagen: linkImagen,
       };
 
       await saveMascota(nuevaMascota);

@@ -1,6 +1,10 @@
 import { FaCalendarAlt, FaHome, FaPaw, FaClipboardList } from "react-icons/fa";
 export const links = [
-  { to: "/propietario", icono: <FaHome size={16} />, label: "Inicio" },
+  {
+    to: "/propietario",
+    icono: <FaHome size={16} />,
+    label: "Inicio",
+  },
   {
     to: "/propietario/mascotas",
     icono: <FaPaw size={16} />,
@@ -14,6 +18,6 @@ export const links = [
   {
     to: "/propietario/historial",
     icono: <FaClipboardList size={16} />,
-    label: "Historial médico",
+    label: "Consultas",
   },
 ];

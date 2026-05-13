@@ -6,5 +6,5 @@ export const login = async (email, password) => {
     contraseña: password,
   });
 
-  return respuesta.data; // Axios ya nos da el JSON listo en .data
+  return respuesta.data;
 };

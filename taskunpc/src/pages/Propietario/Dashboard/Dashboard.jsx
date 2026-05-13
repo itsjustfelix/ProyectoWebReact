@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { FaCalendarAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaPaw } from "react-icons/fa";
 import "./Dashboard.css";
+import { getCitasByPropietario } from "../../../services/citaService";
 
 const Dashboard = () => {
-  const nombre = localStorage.getItem("nombre") || "Usuario";
-  const token = localStorage.getItem("token");
+  const nombre = localStorage.getItem("nombre");
   const codigoUsuario = localStorage.getItem("codigo_usuario");
   const [citas, setCitas] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -19,11 +19,7 @@ const Dashboard = () => {
   useEffect(() => {
     const traerCitas = async () => {
       try {
-        const respuesta = await fetch(
-          `http://localhost:8000/citas/propietario/${codigoUsuario}`,
-          { headers: { Authorization: `Bearer ${token}` } },
-        );
-        const datos = await respuesta.json();
+        const datos = await getCitasByPropietario(codigoUsuario);
         setCitas(datos);
       } catch (error) {
         console.error("Error al traer citas:", error);
@@ -31,21 +27,20 @@ const Dashboard = () => {
         setCargando(false);
       }
     };
-    traerCitas();
-  }, [token, codigoUsuario]);
+
+    if (codigoUsuario) traerCitas();
+  }, [codigoUsuario]);
 
   const getBadge = (estado) => {
     switch (estado?.toLowerCase()) {
-      case "confirmada":
-        return "badge-blue";
       case "pendiente":
         return "badge-yellow";
-      case "completada":
+      case "Asistida":
         return "badge-green";
       case "cancelada":
         return "badge-red";
-      default:
-        return "badge-blue";
+      case "No Asistio":
+        return "badge-grey";
     }
   };
 
@@ -57,7 +52,10 @@ const Dashboard = () => {
 
       <div className="dashboard-content">
         <div className="dashboard-greeting">
-          <h1>¡Bienvenido, {nombre}! 🐾</h1>
+          <h1>
+            ¡Bienvenido, {nombre}! <FaPaw color="#5bb8f5" />
+          </h1>
+
           <p>{fechaHoy}</p>
         </div>
 
@@ -84,8 +82,8 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {citas.map((cita, index) => (
-                  <tr key={index}>
+                {citas.map((cita) => (
+                  <tr key={cita.codigo}>
                     <td>{cita.nombre_mascota}</td>
                     <td>{cita.nombre_veterinario}</td>
                     <td>{cita.fecha}</td>

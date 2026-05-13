@@ -5,7 +5,7 @@ import "./PropietarioLayout.css";
 import { links } from "./SideBardData";
 
 const PropietarioLayout = () => {
-  const nombre = localStorage.getItem("nombre") || "Usuario";
+  const nombre = localStorage.getItem("nombre");
   const rol = localStorage.getItem("rol");
   /**
    * Outlet es el espacio reservado donde se va a renderizar el contenido

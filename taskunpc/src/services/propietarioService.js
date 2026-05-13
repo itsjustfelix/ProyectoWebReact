@@ -1,15 +1,24 @@
 import api from "./api";
 
-export const registrarPropietario = async (datosForm) => {
-  const datosParaEnviar = {
-    cedula: datosForm.cedula,
-    nombreCompleto: datosForm.nombreCompleto,
-    telefono: datosForm.telefono,
-    sexo: datosForm.sexo,
-    email: datosForm.correo,
-    contraseña: datosForm.contrasena,
-  };
+export const savePropietario = async (Propietario) => {
+  const respuesta = await api.post("/propietarios", Propietario);
+  return respuesta.data;
+};
 
-  const respuesta = await api.post("/propietarios", datosParaEnviar);
+export const getPropietario = async () => {
+  const respuesta = await api.get("/propietarios");
+  return respuesta.data;
+};
+
+export const updatePropietario = async (propietario) => {
+  const respuesta = await api.put(
+    `/propietarios/${propietario.cedula}`,
+    propietario,
+  );
+  return respuesta.data;
+};
+
+export const deletePropietario = async (cedula_propietaio) => {
+  const respuesta = await api.delete(`/propietarios/${cedula_propietaio}`);
   return respuesta.data;
 };

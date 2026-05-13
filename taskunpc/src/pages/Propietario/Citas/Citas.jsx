@@ -23,11 +23,17 @@ const Citas = () => {
     if (codigoUsuario) traerCitas();
   }, [codigoUsuario]);
 
-  const estilosBadge = {
-    confirmada: "badge-blue",
-    pendiente: "badge-yellow",
-    completada: "badge-green",
-    cancelada: "badge-red",
+  const getBadge = (estado) => {
+    switch (estado?.toLowerCase()) {
+      case "pendiente":
+        return "badge-yellow";
+      case "Asistida":
+        return "badge-green";
+      case "cancelada":
+        return "badge-red";
+      case "No Asistio":
+        return "badge-grey";
+    }
   };
 
   return (
@@ -51,8 +57,6 @@ const Citas = () => {
             <p className="citas-empty">No tienes citas agendadas.</p>
           ) : (
             <div className="table-responsive">
-              {" "}
-              {/* Recomendado para móvil */}
               <table className="citas-table">
                 <thead>
                   <tr>
@@ -66,15 +70,13 @@ const Citas = () => {
                 </thead>
                 <tbody>
                   {citas.map((cita) => (
-                    <tr key={cita.id_cita || cita.codigo_cita}>
+                    <tr key={cita.codigo}>
                       <td>{cita.nombre_mascota}</td>
                       <td>{cita.nombre_veterinario}</td>
                       <td>{cita.fecha}</td>
                       <td>{cita.hora}</td>
                       <td>
-                        <span
-                          className={`badge ${estilosBadge[cita.estado_cita?.toLowerCase()] || "badge-blue"}`}
-                        >
+                        <span className={`badge ${getBadge(cita.estado_cita)}`}>
                           {cita.estado_cita}
                         </span>
                       </td>

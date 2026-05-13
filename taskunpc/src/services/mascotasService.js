@@ -20,11 +20,11 @@ export const uploadImagenMascota = async (archivo) => {
     },
   });
 
-  return respuesta.data.codigo_imagen;
+  return respuesta.data.url;
 };
 
-export const deleteMascota = async (codigoMascota) => {
-  const respuesta = await api.delete(`/mascotas/${codigoMascota}`);
+export const deleteMascota = async (codigo_Mascota) => {
+  const respuesta = await api.delete(`/mascotas/${codigo_Mascota}`);
   return respuesta.data.message;
 };
 

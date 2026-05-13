@@ -20,27 +20,23 @@ const Historial = () => {
       }
     };
 
-    if (codigoUsuario) {
-      traerHistorial();
-    } else {
-      setCargando(false);
-    }
+    if (codigoUsuario) traerHistorial();
   }, [codigoUsuario]);
 
   return (
     <>
       <div className="historial-topbar">
-        <h2>Historial Médico</h2>
+        <h2>Consultas Medicas</h2>
       </div>
 
       <div className="historial-content">
         <div className="historial-section-card">
           <h3>
-            <FaClipboardList size={16} color="#5bb8f5" /> Consultas realizadas
+            <FaClipboardList size={16} color="#5bb8f5" /> Consultas
           </h3>
 
           {cargando ? (
-            <p className="historial-empty">Cargando historial...</p>
+            <p className="historial-empty">Cargando consultas...</p>
           ) : consultas.length === 0 ? (
             <p className="historial-empty">No hay consultas registradas.</p>
           ) : (
@@ -57,8 +53,8 @@ const Historial = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {consultas.map((consulta, index) => (
-                    <tr key={consulta.id_consulta || index}>
+                  {consultas.map((consulta) => (
+                    <tr key={consulta.codigo}>
                       <td>{consulta.fecha}</td>
                       <td>{consulta.nombre_mascota}</td>
                       <td>{consulta.nombre_veterinario}</td>

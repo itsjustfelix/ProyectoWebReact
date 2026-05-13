@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaTimes } from "react-icons/fa";
+import { FaPencilAlt, FaTimes } from "react-icons/fa";
 import "../Modal.css";
 import { getEspecies } from "../../../services/especieService";
 import { getRazasByCodigoEspecie } from "../../../services/razaService";
@@ -79,7 +79,9 @@ const ModalEditarMascota = ({ mascota, onCerrar, onEditado }) => {
     <div className="modal-overlay" onClick={onCerrar}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h3>✏️ Editar mascota</h3>
+          <h3>
+            <FaPencilAlt /> Editar mascota
+          </h3>
           <button className="modal-cerrar" onClick={onCerrar}>
             <FaTimes />
           </button>

@@ -32,7 +32,7 @@ const Sidebar = ({ links, usuario, rol }) => {
    * las iniciales de los dos primeros nombres y esto se utiliza como imagen. si no encuentra un nombre
    * entonces pone una "u"
    */
-  const iniciales = usuario?.nombre
+  const iniciales = usuario.nombre
     ? usuario.nombre
         .split(" ")
         .slice(0, 2)
@@ -79,7 +79,7 @@ const Sidebar = ({ links, usuario, rol }) => {
         <div className="sidebar-user-chip">
           <div className="sidebar-avatar">{iniciales}</div>
           <div className="sidebar-user-info">
-            <div className="sidebar-uname">{usuario?.nombre}</div>
+            <div className="sidebar-uname">{usuario.nombre}</div>
           </div>
         </div>
         <button className="sidebar-logout" onClick={handleLogout}>

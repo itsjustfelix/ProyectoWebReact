@@ -8,6 +8,11 @@ const Login = () => {
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const rutas = {
+    1: "/admin",
+    2: "/veterinario",
+    3: "/propietario",
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,12 +23,6 @@ const Login = () => {
       localStorage.setItem("rol", datos.rol);
       localStorage.setItem("nombre", datos.nombre);
       localStorage.setItem("codigo_usuario", datos.codigo_usuario);
-
-      const rutas = {
-        1: "/admin",
-        2: "/veterinario",
-        3: "/propietario",
-      };
 
       navigate(rutas[datos.rol]);
     } catch (error) {

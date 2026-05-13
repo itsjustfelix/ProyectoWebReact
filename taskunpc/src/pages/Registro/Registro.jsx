@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Registro.css";
 import Logo from "../../components/Logo/Logo";
-import { registrarPropietario } from "../../services/propietarioService";
+import { savePropietario } from "../../services/propietarioService";
 
 const Registro = () => {
   const navigate = useNavigate();
@@ -14,8 +14,8 @@ const Registro = () => {
     telefono: "",
     sexo: "",
     correo: "",
-    contrasena: "",
-    confirmarContrasena: "",
+    contraseña: "",
+    confirmarContraseña: "",
   });
 
   const handleChange = (e) => {
@@ -26,12 +26,12 @@ const Registro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (form.contrasena !== form.confirmContrasena) {
+    if (form.contraseña !== form.confirmContraseña) {
       return setError("Las contraseñas no coinciden");
     }
 
     try {
-      await registrarPropietario(form);
+      await savePropietario(form);
 
       setError("");
       setExito("¡Cuenta creada exitosamente! Redirigiendo...");
@@ -122,7 +122,7 @@ const Registro = () => {
               <input
                 type="password"
                 name="contrasena"
-                value={form.contrasena}
+                value={form.contraseña}
                 onChange={handleChange}
                 required
               />
@@ -133,7 +133,7 @@ const Registro = () => {
               <input
                 type="password"
                 name="confirmContrasena"
-                value={form.confirmarContrasena}
+                value={form.confirmarContraseña}
                 onChange={handleChange}
                 required
               />

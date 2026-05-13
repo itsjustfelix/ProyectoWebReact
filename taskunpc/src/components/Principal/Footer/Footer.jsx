@@ -14,7 +14,7 @@ const Footer = () => {
             My<span>Vet</span>
           </div>
           <p>
-            Sistema de gestión veterinaria para Valledupar. Digitalizamos el
+            Sistema de gestión veterinaria para Valledupar. Sistematizamos el
             cuidado de tu mascota para que siempre esté en buenas manos.
           </p>
         </div>
@@ -41,10 +41,10 @@ const Footer = () => {
           <h4>Contacto</h4>
           <ul>
             <li>
-              <a href="tel:+573000000000">+57 300 000 0000</a>
+              <a href="tel:+573013308826">+57 301 330 8826</a>
             </li>
             <li>
-              <a href="mailto:info@myvet.com">info@myvet.com</a>
+              <a href="mailto:myvet@gmail.com">myvet@gmail.com</a>
             </li>
           </ul>
         </div>

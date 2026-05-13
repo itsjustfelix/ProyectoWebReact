@@ -7,7 +7,7 @@ const Hero = () => {
     <section className="hero">
       <span className="hero-badge">
         <FaPaw /> <span></span>
-        La veterinaria de tu barrio, ahora en línea
+        La veterinaria de tu barrio, ahora en línea !
       </span>
 
       <h1>
