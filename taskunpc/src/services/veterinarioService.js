@@ -5,6 +5,11 @@ export const getVeterinarios = async () => {
   return respuesta.data;
 };
 
+export const getVeterinariosOption = async () => {
+  const respuesta = await api.get("/veterinarios/option");
+  return respuesta.data;
+};
+
 export const saveVeterinario = async (veterinario) => {
   const respuesta = await api.post("/veterinarios", veterinario);
   return respuesta.data;

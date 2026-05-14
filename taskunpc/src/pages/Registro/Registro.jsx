@@ -26,7 +26,7 @@ const Registro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (form.contraseña !== form.confirmContraseña) {
+    if (form.contraseña !== form.confirmarContraseña) {
       return setError("Las contraseñas no coinciden");
     }
 
@@ -121,7 +121,7 @@ const Registro = () => {
               <label>Contraseña</label>
               <input
                 type="password"
-                name="contrasena"
+                name="contraseña"
                 value={form.contraseña}
                 onChange={handleChange}
                 required
@@ -132,7 +132,7 @@ const Registro = () => {
               <label>Confirme la Contraseña</label>
               <input
                 type="password"
-                name="confirmContrasena"
+                name="confirmarContraseña"
                 value={form.confirmarContraseña}
                 onChange={handleChange}
                 required

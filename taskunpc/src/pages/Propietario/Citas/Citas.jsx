@@ -1,27 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { FaCalendarAlt, FaPlus } from "react-icons/fa";
 import "./Citas.css";
-import { getCitasByPropietario } from "../../../services/citaService";
-
+import {
+  deleteCita,
+  getCitasByPropietario,
+} from "../../../services/citaService";
+import RegistrarCita from "./RegistrarCita/RegistrarCita";
+import { formatearFecha } from "../../../utils/FormatearFecha";
+import { formatearHora } from "../../../utils/FormatearHora";
+import ModalEliminarCita from "../../../components/Modal/ModalEliminarCita/ModalEliminarCita";
 const Citas = () => {
   const codigoUsuario = localStorage.getItem("codigo_usuario");
   const [citas, setCitas] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [registrarCita, setRegistrarCita] = useState(false);
+  const [cancelarCita, setCancelarCita] = useState(null);
 
-  useEffect(() => {
-    const traerCitas = async () => {
-      try {
-        const datos = await getCitasByPropietario(codigoUsuario);
-        setCitas(datos);
-      } catch (error) {
-        console.error("Error al traer citas:", error);
-      } finally {
-        setCargando(false);
-      }
-    };
-
-    if (codigoUsuario) traerCitas();
+  const traerCitas = useCallback(async () => {
+    try {
+      setCargando(true);
+      const datos = await getCitasByPropietario(codigoUsuario);
+      setCitas(Array.isArray(datos) ? datos : []);
+    } catch (error) {
+      console.error("Error al traer citas:", error);
+    } finally {
+      setCargando(false);
+    }
   }, [codigoUsuario]);
+  const confirmarEliminar = (cita) => {
+    setCancelarCita(cita);
+  };
+  useEffect(() => {
+    if (codigoUsuario) traerCitas();
+  }, [codigoUsuario, traerCitas]);
 
   const getBadge = (estado) => {
     switch (estado?.toLowerCase()) {
@@ -36,11 +47,24 @@ const Citas = () => {
     }
   };
 
+  const eliminarCita = async () => {
+    try {
+      await deleteCita(cancelarCita.codigo);
+      setCancelarCita(null);
+      traerCitas();
+    } catch (error) {
+      console.error("Error al cancelar la cita:", error);
+    }
+  };
+
   return (
     <>
       <div className="citas-topbar">
         <h2>Mis Citas</h2>
-        <button className="citas-btn-agendar">
+        <button
+          className="citas-btn-agendar"
+          onClick={() => setRegistrarCita(true)}
+        >
           <FaPlus size={14} /> Agendar cita
         </button>
       </div>
@@ -61,6 +85,7 @@ const Citas = () => {
                 <thead>
                   <tr>
                     <th>Mascota</th>
+                    <th>Especializacion</th>
                     <th>Veterinario</th>
                     <th>Fecha</th>
                     <th>Hora</th>
@@ -72,16 +97,29 @@ const Citas = () => {
                   {citas.map((cita) => (
                     <tr key={cita.codigo}>
                       <td>{cita.nombre_mascota}</td>
+                      <td>{cita.nombre_especializacion}</td>
                       <td>{cita.nombre_veterinario}</td>
-                      <td>{cita.fecha}</td>
-                      <td>{cita.hora}</td>
+                      <td>{formatearFecha(cita.fecha)}</td>
+                      <td>{formatearHora(cita.hora)}</td>
                       <td>
                         <span className={`badge ${getBadge(cita.estado_cita)}`}>
                           {cita.estado_cita}
                         </span>
                       </td>
                       <td>
-                        <button className="btn-cancelar">Cancelar</button>
+                        {/**
+                         * Renderizado condiciional: si el estado de la cita es pendiente (todavia no ha asistido a la cita)
+                         * le aparece el boton de cancelar la cita, de resto no se le mostrara porque tendra un estado
+                         * diferente.
+                         */}
+                        {cita.estado_cita === "Pendiente" && (
+                          <button
+                            className="btn-cancelar"
+                            onClick={() => confirmarEliminar(cita)}
+                          >
+                            Cancelar
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -91,6 +129,19 @@ const Citas = () => {
           )}
         </div>
       </div>
+      {registrarCita && (
+        <RegistrarCita
+          onCerrar={() => setRegistrarCita(false)}
+          onGuardado={() => traerCitas()}
+        />
+      )}
+      {cancelarCita && (
+        <ModalEliminarCita
+          cita={cancelarCita}
+          onCerrar={() => setCancelarCita(null)}
+          onEliminado={eliminarCita}
+        />
+      )}
     </>
   );
 };

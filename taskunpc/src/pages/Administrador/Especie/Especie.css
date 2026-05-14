@@ -73,13 +73,14 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: #4a6278;
-  padding: 10px 14px;
+  padding: 10px 74px;
   border-bottom: 2px solid #e2eaf4;
 }
 
 .esp-table td {
-  padding: 12px 14px;
+  padding: 10px 74px;
   font-size: 0.88rem;
+  text-transform: capitalize;
   border-bottom: 1px solid #e2eaf4;
   color: #1e3a4f;
 }
