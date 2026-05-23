@@ -5,6 +5,9 @@ import { getMascotasByPropietario } from "../../../../services/mascotasService";
 import { getEspecializaciones } from "../../../../services/especializacionesService";
 import { getVeterinariosOption } from "../../../../services/veterinarioService";
 import { saveCita } from "../../../../services/citaService";
+import { getHorasOcupadas } from "../../../../services/citaService";
+import { generarHorasDisponibles } from "../../../../utils/GenerarHoras";
+import { formatearHoraSelect } from "../../../../utils/GenerarHoras";
 
 const RegistrarCita = ({ onCerrar, onGuardado }) => {
   const codigoUsuario = localStorage.getItem("codigo_usuario");
@@ -21,11 +24,9 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
   });
   const [error, setError] = useState("");
   const [guardando, setGuardando] = useState(false);
+  const horasDisponibles = generarHorasDisponibles();
+  const [horasOcupadas, setHorasOcupadas] = useState([]);
 
-  /*
-   * al abrir el modal trae las mascotas del propietario
-   * y las especializaciones disponibles
-   */
   useEffect(() => {
     const traerDatos = async () => {
       try {
@@ -44,21 +45,36 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
     traerDatos();
   }, [codigoUsuario]);
 
+  const consultarDisponibilidad = async (cedulaVeterinario, fecha) => {
+    if (!cedulaVeterinario || !fecha) return;
+    try {
+      const horasOcupadas = await getHorasOcupadas(fecha, cedulaVeterinario);
+      setHorasOcupadas(horasOcupadas);
+      setForm((prev) => ({ ...prev, hora: "" }));
+    } catch (error) {
+      console.error("Error al consultar disponibilidad:", error);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
     if (error) setError("");
 
-    /*
-     * cuando cambia la especializacion filtra los veterinarios
-     * que tienen esa especializacion
-     */
     if (name === "codigoEspecializacion") {
       const vetFiltrados = veterinarios.filter(
         (v) => v.codigo_especializacion === value,
       );
       setVetFiltrados(vetFiltrados);
-      setForm((prev) => ({ ...prev, cedulaVeterinario: "" }));
+      setForm((prev) => ({ ...prev, cedulaVeterinario: "", hora: "" }));
+      setHorasOcupadas([]);
+    }
+
+    if (name === "cedulaVeterinario") {
+      consultarDisponibilidad(value, form.fecha);
+    }
+    if (name === "fecha") {
+      consultarDisponibilidad(form.cedulaVeterinario, value);
     }
   };
 
@@ -93,29 +109,6 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
 
         <form onSubmit={handleGuardar}>
           <div className="modal-grid">
-            <div className="modal-form-group">
-              <label>Fecha</label>
-              <input
-                type="date"
-                name="fecha"
-                value={form.fecha}
-                onChange={handleChange}
-                min={new Date().toISOString().split("T")[0]}
-                required
-              />
-            </div>
-
-            <div className="modal-form-group">
-              <label>Hora</label>
-              <input
-                type="time"
-                name="hora"
-                value={form.hora}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
             <div className="modal-form-group modal-full">
               <label>Mascota</label>
               <select
@@ -165,6 +158,39 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
                     {v.nombre_completo}
                   </option>
                 ))}
+              </select>
+            </div>
+
+            <div className="modal-form-group modal-full">
+              <label>Fecha</label>
+              <input
+                type="date"
+                name="fecha"
+                value={form.fecha}
+                onChange={handleChange}
+                min={new Date().toISOString().split("T")[0]}
+                required
+                disabled={!form.cedulaVeterinario}
+              />
+            </div>
+
+            <div className="modal-form-group modal-full">
+              <label>Hora</label>
+              <select
+                name="hora"
+                value={form.hora}
+                onChange={handleChange}
+                required
+                disabled={!form.cedulaVeterinario || !form.fecha}
+              >
+                <option value="">Selecciona una hora...</option>
+                {horasDisponibles
+                  .filter((hora) => !horasOcupadas.includes(hora))
+                  .map((hora) => (
+                    <option key={hora} value={hora}>
+                      {formatearHoraSelect(hora)}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>

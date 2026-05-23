@@ -19,3 +19,10 @@ export const deleteCita = async (codigo_cita) => {
   const respuesta = await api.delete(`/citas/${codigo_cita}`);
   return respuesta.data;
 };
+
+export const getHorasOcupadas = async (fecha, cedula_veterinario) => {
+  const respuesta = await api.get("/citas/ocupadas", {
+    params: { fecha, cedula_veterinario },
+  });
+  return respuesta.data;
+};
