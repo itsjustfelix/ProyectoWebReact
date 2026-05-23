@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
 import Logo from "../Logo/Logo";
 import "./Sidebar.css";
+import { logout } from "../../services/loginService";
 
 const Sidebar = ({ links, usuario, rol }) => {
   const navigate = useNavigate();
@@ -46,7 +47,8 @@ const Sidebar = ({ links, usuario, rol }) => {
    * cerrar sesion, llama a esta funcion que elimina el localstrore
    * y lleva al usuario a la pagina del login
    */
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await logout();
     localStorage.clear();
     navigate("/login");
   };
