@@ -1,0 +1,97 @@
+.modal-sesion-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 58, 79, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-sesion {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 16px 60px rgba(30, 58, 79, 0.2);
+  animation: modalIn 0.25s ease;
+  text-align: center;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.modal-sesion-icono {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.modal-sesion h3 {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e3a4f;
+  margin-bottom: 10px;
+}
+
+.modal-sesion p {
+  font-size: 0.88rem;
+  color: #4a6278;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.modal-sesion-acciones {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-refrescar {
+  background: #5bb8f5;
+  color: #ffffff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-refrescar:hover {
+  background: #2e9cdb;
+}
+
+.btn-refrescar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-cerrar-sesion {
+  background: #ffe5e5;
+  color: #c0392b;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-cerrar-sesion:hover {
+  background: #ffc5c5;
+}

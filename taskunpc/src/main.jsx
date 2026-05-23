@@ -19,10 +19,12 @@ import "@fontsource/raleway/400.css";
 import "@fontsource/raleway/600.css";
 import "@fontsource/raleway/700.css";
 import "@fontsource/raleway/800.css";
+import GestorSesion from "./components/ModalRefrescarSesion/GestorSesion";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
+      <GestorSesion />
       <Routes>
         <Route path="/" element={<Principal />} />
         <Route path="/login" element={<Login />} />

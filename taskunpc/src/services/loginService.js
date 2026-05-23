@@ -8,3 +8,12 @@ export const login = async (email, password) => {
 
   return respuesta.data;
 };
+
+export const logout = async () => {
+  await api.post("/login/logout");
+};
+
+export const refreshToken = async () => {
+  const respuesta = await api.post("/login/refresh");
+  return respuesta.data;
+};
