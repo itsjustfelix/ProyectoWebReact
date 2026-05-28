@@ -14,8 +14,14 @@ const ModalRegistrarEspecie = ({ onCerrar, onGuardado }) => {
       onGuardado();
       onCerrar();
     } catch (error) {
-      setError("Error al registrar la especie");
-      console.error(error);
+      setError(
+        "Error al registrar la especie: " +
+          error.response?.data?.detail?.error?.message,
+      );
+      console.error(
+        "Error al registrar la especie: ",
+        error.response?.data?.detail?.error?.message,
+      );
     }
   };
 

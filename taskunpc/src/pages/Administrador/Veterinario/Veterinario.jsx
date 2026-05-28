@@ -26,7 +26,10 @@ const Veterinarios = () => {
       const respuesta = await getVeterinarios();
       setVeterinarios(Array.isArray(respuesta) ? respuesta : []);
     } catch (error) {
-      console.error("Error al traer veterinarios:", error);
+      console.error(
+        "Error al traer veterinarios:",
+        error.response?.data?.detail?.error?.message,
+      );
     } finally {
       setCargando(false);
     }
@@ -42,7 +45,10 @@ const Veterinarios = () => {
       setVetAEliminar(null);
       traerVeterinarios();
     } catch (error) {
-      console.error("Error al eliminar veterinario:", error);
+      console.error(
+        "Error al eliminar veterinario:",
+        error.response?.data?.detail?.error?.message,
+      );
     }
   };
 

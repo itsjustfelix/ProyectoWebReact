@@ -22,7 +22,10 @@ const Propietarios = () => {
       const respuesta = await getPropietario();
       setPropietarios(Array.isArray(respuesta) ? respuesta : []);
     } catch (error) {
-      console.error("Error al traer propietarios:", error);
+      console.error(
+        "Error al traer propietarios:",
+        error.response?.data?.detail?.error?.message,
+      );
     } finally {
       setCargando(false);
     }
@@ -34,7 +37,10 @@ const Propietarios = () => {
       setPropAEliminar(null);
       traerPropietarios();
     } catch (error) {
-      console.error("Error al eliminar propietario:", error);
+      console.error(
+        "Error al eliminar propietario:",
+        error.response?.data?.detail?.error?.message,
+      );
     }
   };
 

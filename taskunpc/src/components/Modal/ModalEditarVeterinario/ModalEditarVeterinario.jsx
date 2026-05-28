@@ -32,7 +32,10 @@ const ModalEditarVeterinario = ({ veterinario, onCerrar, onEditado }) => {
           setForm((prev) => ({ ...prev, codigo_especialidad: esp.codigo }));
         }
       } catch (error) {
-        console.error("Error al traer especializaciones:", error);
+        console.error(
+          "Error al traer especializaciones: ",
+          error.response?.data?.detail?.error?.message,
+        );
       }
     };
     traerEspecializaciones();

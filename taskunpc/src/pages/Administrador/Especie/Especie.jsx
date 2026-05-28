@@ -19,7 +19,10 @@ const Especie = () => {
       const respuesta = await getEspecies();
       setEspecies(Array.isArray(respuesta) ? respuesta : []);
     } catch (error) {
-      console.error("Error al traer especies:", error);
+      console.error(
+        "Error al traer especies:",
+        error.response?.data?.detail?.error?.message,
+      );
     } finally {
       setcargando(false);
     }
@@ -31,7 +34,10 @@ const Especie = () => {
       setEspEliminar(null);
       traerEspecies();
     } catch (error) {
-      console.error("Error al eliminar especie:", error);
+      console.error(
+        "Error al eliminar especie:",
+        error.response?.data?.detail?.error?.message,
+      );
     }
   };
 

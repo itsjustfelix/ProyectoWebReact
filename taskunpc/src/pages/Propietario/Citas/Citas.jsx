@@ -22,7 +22,10 @@ const Citas = () => {
       const datos = await getCitasByPropietario(codigoUsuario);
       setCitas(Array.isArray(datos) ? datos : []);
     } catch (error) {
-      console.error("Error al traer citas:", error);
+      console.error(
+        "Error al traer citas:",
+        error.response?.data?.detail?.error?.message,
+      );
     } finally {
       setCargando(false);
     }
@@ -53,7 +56,10 @@ const Citas = () => {
       setCancelarCita(null);
       traerCitas();
     } catch (error) {
-      console.error("Error al cancelar la cita:", error);
+      console.error(
+        "Error al cancelar la cita:",
+        error.response?.data?.detail?.error?.message,
+      );
     }
   };
 

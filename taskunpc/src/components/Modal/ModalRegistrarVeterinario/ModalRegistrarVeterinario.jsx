@@ -30,7 +30,10 @@ const ModalRegistrarVeterinario = ({ onCerrar, onGuardado }) => {
           Array.isArray(respuesta) ? respuesta : respuesta.data || [],
         );
       } catch (error) {
-        console.error("Error al traer especializaciones:", error);
+        console.error(
+          "Error al traer especializaciones:",
+          error.response?.data?.detail?.error?.message,
+        );
       }
     };
     traerEspecializaciones();
@@ -55,8 +58,14 @@ const ModalRegistrarVeterinario = ({ onCerrar, onGuardado }) => {
       onGuardado();
       onCerrar();
     } catch (error) {
-      setError("Error al registrar el veterinario");
-      console.error(error);
+      setError(
+        "Error al registrar el veterinario: " +
+          error.response?.data?.detail?.error?.message,
+      );
+      console.error(
+        "Error al registrar el veterinario: ",
+        error.response?.data?.detail?.error?.message,
+      );
     }
   };
 

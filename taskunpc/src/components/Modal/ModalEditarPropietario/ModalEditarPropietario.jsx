@@ -25,8 +25,14 @@ const ModalEditarPropietario = ({ propietario, onCerrar, onEditado }) => {
       await updatePropietario(form);
       onEditado();
     } catch (error) {
-      setError("Error al editar el propietario");
-      console.error(error);
+      setError(
+        "Error al editar el propietario: " +
+          error.response?.data?.detail?.error?.message,
+      );
+      console.error(
+        "Error al editar el propietario:",
+        error.response?.data?.detail?.error?.message,
+      );
     }
   };
 

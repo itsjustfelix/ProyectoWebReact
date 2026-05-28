@@ -39,7 +39,10 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
         setEspecializaciones(Array.isArray(resEsp) ? resEsp : []);
         setVeterinarios(Array.isArray(resVets) ? resVets : []);
       } catch (error) {
-        console.error("Error al traer datos:", error);
+        console.error(
+          "Error al traer datos:",
+          error.response?.data?.detail?.error?.message,
+        );
       }
     };
     traerDatos();
@@ -52,7 +55,10 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
       setHorasOcupadas(horasOcupadas);
       setForm((prev) => ({ ...prev, hora: "" }));
     } catch (error) {
-      console.error("Error al consultar disponibilidad:", error);
+      console.error(
+        "Error al consultar disponibilidad:",
+        error.response?.data?.detail?.error?.message,
+      );
     }
   };
 
@@ -88,8 +94,14 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
       onGuardado();
       onCerrar();
     } catch (error) {
-      setError("Error al agendar la cita");
-      console.error(error);
+      setError(
+        "Error al agendar la cita:",
+        error.response?.data?.detail?.error?.message,
+      );
+      console.error(
+        "Error al agendar la cita:",
+        error.response?.data?.detail?.error?.message,
+      );
     } finally {
       setGuardando(false);
     }

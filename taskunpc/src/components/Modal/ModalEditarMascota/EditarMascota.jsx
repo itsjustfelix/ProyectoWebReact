@@ -35,7 +35,10 @@ const ModalEditarMascota = ({ mascota, onCerrar, onEditado }) => {
           }));
         }
       } catch (error) {
-        console.error("Error al precargar datos:", error);
+        console.error(
+          "Error al precargar datos:",
+          error.response?.data?.detail?.error?.message,
+        );
       }
     };
 
@@ -59,7 +62,10 @@ const ModalEditarMascota = ({ mascota, onCerrar, onEditado }) => {
         setRazasFiltradas(listaRazas);
         setForm((prev) => ({ ...prev, codigo_raza: "" }));
       } catch (error) {
-        console.error("Error al traer razas:", error);
+        console.error(
+          "Error al traer razas:",
+          error.response?.data?.detail?.error?.message,
+        );
       }
     }
   };
@@ -71,7 +77,10 @@ const ModalEditarMascota = ({ mascota, onCerrar, onEditado }) => {
       onEditado();
       onCerrar();
     } catch (error) {
-      console.error("Error al editar mascota:", error);
+      console.error(
+        "Error al editar mascota:",
+        error.response?.data?.detail?.error?.message,
+      );
     }
   };
 

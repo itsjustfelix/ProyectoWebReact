@@ -13,8 +13,14 @@ const ModalEditarEspecie = ({ especie, onCerrar, onEditado }) => {
       await updateEspecie(especie.codigo, nombre);
       onEditado();
     } catch (error) {
-      setError("Error al editar la especie");
-      console.error(error);
+      setError(
+        "Error al editar la especie:",
+        error.response?.data?.detail?.error?.message,
+      );
+      console.error(
+        "Error al editar la especie:",
+        error.response?.data?.detail?.error?.message,
+      );
     }
   };
 

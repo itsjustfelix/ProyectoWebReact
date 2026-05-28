@@ -7,7 +7,7 @@ const ModalEliminarCita = ({ cita, onCerrar, onEliminado }) => {
     <div className="modal-overlay" onClick={onCerrar}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h3>¿Eliminar especie?</h3>
+          <h3>¿Eliminar cita?</h3>
           <button className="modal-cerrar" onClick={onCerrar}>
             <FaTimes />
           </button>

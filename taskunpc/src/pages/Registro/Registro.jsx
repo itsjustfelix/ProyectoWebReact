@@ -39,8 +39,9 @@ const Registro = () => {
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
       const msg =
-        err.response?.data?.detail || "Error al conectar con el servidor";
-      setError(Array.isArray(msg) ? msg[0].msg : msg);
+        err.response?.data?.detail?.error?.message ||
+        "Error al conectar con el servidor";
+      setError(msg);
     }
   };
 

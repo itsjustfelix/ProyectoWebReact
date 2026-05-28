@@ -31,8 +31,14 @@ const ModalRegistrarPropietario = ({ onCerrar, onGuardado }) => {
       onGuardado();
       onCerrar();
     } catch (error) {
-      setError("Error al registrar el propietario...");
-      console.error(error);
+      setError(
+        "Error al registrar el propietario: " +
+          error.response?.data?.detail?.error?.message,
+      );
+      console.error(
+        "Error al registrar el propietario: ",
+        error.response?.data?.detail?.error?.message,
+      );
     }
   };
 

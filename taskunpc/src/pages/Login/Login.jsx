@@ -27,7 +27,7 @@ const Login = () => {
       navigate(rutas[datos.rol]);
     } catch (error) {
       const mensajeError =
-        error.response?.data?.detail || "Error al conectar con el servidor";
+        error.response?.data?.detail?.error?.message || "Error al conectar con el servidor";
       setError(mensajeError);
     }
   };
