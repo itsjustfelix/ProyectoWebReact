@@ -24,3 +24,8 @@ export const deleteVeterinario = async (cedula_veterinario) => {
   const respuesta = await api.delete(`/veterinarios/${cedula_veterinario}`);
   return respuesta.data;
 };
+
+export const countVeterinarios = async () => {
+  const respuesta = await api.get("/veterinarios");
+  return respuesta.data.length;
+};

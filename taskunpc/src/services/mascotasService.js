@@ -5,6 +5,11 @@ export const getMascotasByPropietario = async (codigoUsuario) => {
   return respuesta.data;
 };
 
+export const getMascotas = async () => {
+  const respuesta = await api.get("/mascotas");
+  return respuesta.data;
+};
+
 export const saveMascota = async (mascotaData) => {
   const respuesta = await api.post("/mascotas", mascotaData);
   return respuesta.data;
@@ -31,4 +36,9 @@ export const deleteMascota = async (codigo_Mascota) => {
 export const updateMascota = async (codigo_mascota, mascota) => {
   const respuesta = await api.put(`/mascotas/${codigo_mascota}`, mascota);
   return respuesta.data;
+};
+
+export const countMascotas = async () => {
+  const respuesta = await getMascotas();
+  return respuesta.length;
 };

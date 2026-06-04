@@ -5,6 +5,7 @@ import {
   FaPaw,
   FaDog,
   FaStar,
+  FaUserShield,
 } from "react-icons/fa";
 
 export const links = [
@@ -20,15 +21,13 @@ export const links = [
     label: "Propietarios",
   },
   {
-    to: "/admin/especies",
-    icono: <FaPaw size={16} />,
-    label: "Especies",
+    to: "/admin/administradores",
+    icono: <FaUserShield size={16} />,
+    label: "Administradores",
   },
-  {
-    to: "/admin/razas",
-    icono: <FaDog size={16} />,
-    label: "Razas",
-  },
+  { to: "/admin/mascotas", icono: <FaPaw size={16} />, label: "Mascotas" },
+  { to: "/admin/especies", icono: <FaPaw size={16} />, label: "Especies" },
+  { to: "/admin/razas", icono: <FaDog size={16} />, label: "Razas" },
   {
     to: "/admin/especializaciones",
     icono: <FaStar size={16} />,

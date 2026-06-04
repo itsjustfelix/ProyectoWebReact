@@ -29,20 +29,6 @@ const Sidebar = ({ links, usuario, rol }) => {
   const rutaInicio =
     rol === "1" ? "/admin" : rol === "2" ? "/veterinario" : "/propietario";
   /**
-   * como no se sabe si vamos a cargar imagenes de los usuarios, esta funcion lo que hace es tomar
-   * las iniciales de los dos primeros nombres y esto se utiliza como imagen. si no encuentra un nombre
-   * entonces pone una "u"
-   */
-  const iniciales = usuario.nombre
-    ? usuario.nombre
-        .split(" ")
-        .slice(0, 2)
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-    : "U";
-
-  /**
    * es una funcion que se utiliza cuando el usuario presione el
    * cerrar sesion, llama a esta funcion que elimina el localstrore
    * y lleva al usuario a la pagina del login
@@ -79,7 +65,12 @@ const Sidebar = ({ links, usuario, rol }) => {
 
       <div className="sidebar-footer">
         <div className="sidebar-user-chip">
-          <div className="sidebar-avatar">{iniciales}</div>
+          <div className="sidebar-avatar">
+            <img
+              src={`https://api.dicebear.com/9.x/pixel-art/svg?seed=${encodeURIComponent(usuario.nombre)}`}
+              alt="avatar"
+            />
+          </div>
           <div className="sidebar-user-info">
             <div className="sidebar-uname">{usuario.nombre}</div>
           </div>

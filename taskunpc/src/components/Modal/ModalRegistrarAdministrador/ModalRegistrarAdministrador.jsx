@@ -1,38 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { FaTimes, FaUserMd } from "react-icons/fa";
-import { saveVeterinario } from "../../../services/veterinarioService";
-import { getEspecializaciones } from "../../../services/especializacionesService";
+import React, { useState } from "react";
+import { FaTimes, FaUserShield } from "react-icons/fa";
 import "../Modal.css";
+import { saveAdministrador } from "../../../services/administradorService";
 
-const ModalRegistrarVeterinario = ({ onCerrar, onGuardado }) => {
-  const [especializaciones, setEspecializaciones] = useState([]);
+const ModalRegistrarAdministrador = ({ onCerrar, onGuardado }) => {
   const [form, setForm] = useState({
     cedula: "",
     nombreCompleto: "",
     telefono: "",
-    sexo: "",
-    codigo_especialidad: "",
     email: "",
     contraseña: "",
     confirmarContraseña: "",
   });
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const traerEspecializaciones = async () => {
-      try {
-        const respuesta = await getEspecializaciones();
-
-        setEspecializaciones(respuesta);
-      } catch (error) {
-        console.error(
-          "Error al traer especializaciones:",
-          error.response?.data?.detail?.error?.message,
-        );
-      }
-    };
-    traerEspecializaciones();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,24 +22,18 @@ const ModalRegistrarVeterinario = ({ onCerrar, onGuardado }) => {
 
   const handleGuardar = async (e) => {
     e.preventDefault();
-
     if (form.contraseña !== form.confirmarContraseña) {
       setError("Las contraseñas no coinciden");
       return;
     }
-
     try {
-      await saveVeterinario(form);
+      await saveAdministrador(form);
       onGuardado();
       onCerrar();
     } catch (error) {
       setError(
-        "Error al registrar el veterinario: " +
+        "Error al registrar el administrador: " +
           error.response?.data?.detail?.error?.message,
-      );
-      console.error(
-        "Error al registrar el veterinario: ",
-        error.response?.data?.detail?.error?.message,
       );
     }
   };
@@ -69,7 +43,7 @@ const ModalRegistrarVeterinario = ({ onCerrar, onGuardado }) => {
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h3>
-            <FaUserMd size={16} /> Registrar veterinario
+            <FaUserShield size={16} /> Registrar administrador
           </h3>
           <button className="modal-cerrar" onClick={onCerrar}>
             <FaTimes />
@@ -97,7 +71,7 @@ const ModalRegistrarVeterinario = ({ onCerrar, onGuardado }) => {
                 name="nombreCompleto"
                 value={form.nombreCompleto}
                 onChange={handleChange}
-                placeholder="Ej: Dr. Juan Pérez"
+                placeholder="Ej: Carlos Pérez"
                 required
               />
             </div>
@@ -112,37 +86,6 @@ const ModalRegistrarVeterinario = ({ onCerrar, onGuardado }) => {
                 placeholder="Ej: 3001234567"
                 required
               />
-            </div>
-
-            <div className="modal-form-group">
-              <label>Sexo</label>
-              <select
-                name="sexo"
-                value={form.sexo}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Selecciona...</option>
-                <option value="M">Masculino</option>
-                <option value="F">Femenino</option>
-              </select>
-            </div>
-
-            <div className="modal-form-group">
-              <label>Especialización</label>
-              <select
-                name="codigo_especialidad"
-                value={form.codigo_especialidad}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Selecciona...</option>
-                {especializaciones.map((esp) => (
-                  <option key={esp.codigo} value={esp.codigo}>
-                    {esp.nombre}
-                  </option>
-                ))}
-              </select>
             </div>
 
             <div className="modal-form-group">
@@ -191,7 +134,7 @@ const ModalRegistrarVeterinario = ({ onCerrar, onGuardado }) => {
               Cancelar
             </button>
             <button type="submit" className="btn-guardar">
-              Guardar veterinario
+              Guardar administrador
             </button>
           </div>
         </form>
@@ -200,4 +143,4 @@ const ModalRegistrarVeterinario = ({ onCerrar, onGuardado }) => {
   );
 };
 
-export default ModalRegistrarVeterinario;
+export default ModalRegistrarAdministrador;

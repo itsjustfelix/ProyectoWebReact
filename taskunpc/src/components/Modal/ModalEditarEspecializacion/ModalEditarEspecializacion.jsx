@@ -1,0 +1,75 @@
+import React, { useState } from "react";
+import { FaPencilAlt, FaTimes } from "react-icons/fa";
+import "../Modal.css";
+import { updateEspecializacion } from "../../../services/especializacionesService";
+
+const ModalEditarEspecializacion = ({
+  especializacion,
+  onCerrar,
+  onEditado,
+}) => {
+  const [nombre, setNombre] = useState(especializacion.nombre);
+  const [error, setError] = useState("");
+
+  const handleGuardar = async (e) => {
+    e.preventDefault();
+    try {
+      await updateEspecializacion({ codigo: especializacion.codigo, nombre });
+      onEditado();
+    } catch (error) {
+      setError(
+        "Error al editar la especialización: " +
+          error.response?.data?.detail?.error?.message,
+      );
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onCerrar}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>
+            <FaPencilAlt /> Editar especialización
+          </h3>
+          <button className="modal-cerrar" onClick={onCerrar}>
+            <FaTimes />
+          </button>
+        </div>
+
+        <form onSubmit={handleGuardar}>
+          <div className="modal-grid">
+            <div className="modal-form-group modal-full">
+              <label>Nombre de la especialización</label>
+              <input
+                type="text"
+                value={nombre}
+                onChange={(e) => {
+                  setNombre(e.target.value);
+                  setError("");
+                }}
+                required
+              />
+            </div>
+          </div>
+
+          {error && <p className="msg-error">{error}</p>}
+
+          <div className="modal-acciones">
+            <button
+              type="button"
+              className="btn-cancelar-modal"
+              onClick={onCerrar}
+            >
+              Cancelar
+            </button>
+            <button type="submit" className="btn-guardar">
+              Guardar cambios
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default ModalEditarEspecializacion;

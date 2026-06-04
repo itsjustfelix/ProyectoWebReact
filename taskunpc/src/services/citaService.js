@@ -5,6 +5,21 @@ export const getCitasByPropietario = async (codigoUsuario) => {
   return respuesta.data;
 };
 
+export const getCitasByVeterinario = async (cedula_veterinario) => {
+  const respuesta = await api.get(`/citas/veterinario/${cedula_veterinario}`);
+  return respuesta.data;
+};
+
+export const getCitasByFecha = async (fecha) => {
+  const respuesta = await api.get(`/citas/fecha/${fecha}`);
+  return respuesta.data;
+};
+
+export const countCitas = async (fecha) => {
+  const citas = await getCitasByFecha(fecha);
+  return citas.length;
+};
+
 export const saveCita = async (cita) => {
   const respuesta = await api.post("/citas", cita);
   return respuesta.data;

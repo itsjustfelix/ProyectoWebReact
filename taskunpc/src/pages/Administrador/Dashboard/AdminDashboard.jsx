@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaUserMd,
   FaUsers,
@@ -7,67 +7,43 @@ import {
   FaClipboardList,
 } from "react-icons/fa";
 import "./Dashboard.css";
+import { countVeterinarios } from "../../../services/veterinarioService";
+import { countPropietarios } from "../../../services/propietarioService";
+import { countMascotas } from "../../../services/mascotasService";
+import { countCitas, getCitasByFecha } from "../../../services/citaService";
 
 const AdminDashboard = () => {
-  const nombre = localStorage.getItem("nombre") || "Administrador";
-
+  const nombre = localStorage.getItem("nombre");
+  const codigoUsuario = localStorage.getItem("codigo_usuario");
+  const [NumeroVeterinarios, setNumeroVeterinarios] = useState(0);
+  const [NumeroPropietarios, setNumeroPropietarios] = useState(0);
+  const [NumeroMascotas, setNumeroMascotas] = useState(0);
+  const [NumeroCitasHoy, setNumeroCitasHoy] = useState(0);
+  const [citasRecientes, setCitasRecientes] = useState([]);
   const fechaHoy = new Date().toLocaleDateString("es-CO", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   });
+  const hoy = new Date();
+  const fechaFormateada = hoy.toISOString().split("T")[0];
 
-  /*
-   * datos estaticos mientras se conecta con el backend
-   * cuando se conecte se reemplazaran por llamadas a la api
-   */
-  const stats = [
-    {
-      icono: <FaUserMd color="#5bb8f5" size={20} />,
-      label: "Veterinarios",
-      valor: 0,
-    },
-    {
-      icono: <FaUsers color="#5bb8f5" size={20} />,
-      label: "Propietarios",
-      valor: 0,
-    },
-    { icono: <FaPaw color="#5bb8f5" size={20} />, label: "Mascotas", valor: 0 },
-    {
-      icono: <FaCalendarAlt color="#5bb8f5" size={20} />,
-      label: "Citas hoy",
-      valor: 0,
-    },
-  ];
-
-  /*
-   * citas recientes estaticas de ejemplo
-   * se reemplazaran por datos reales del backend
-   */
-  const citasRecientes = [
-    {
-      mascota: "Luna",
-      propietario: "Carlos Pérez",
-      veterinario: "Dra. Gómez",
-      hora: "08:00",
-      estado: "Completada",
-    },
-    {
-      mascota: "Michi",
-      propietario: "Ana Torres",
-      veterinario: "Dr. Ramos",
-      hora: "09:00",
-      estado: "Pendiente",
-    },
-    {
-      mascota: "Rocky",
-      propietario: "Juan Díaz",
-      veterinario: "Dra. Gómez",
-      hora: "10:00",
-      estado: "Confirmada",
-    },
-  ];
+  useEffect(() => {
+    const fetchStats = async () => {
+      const veterinarios = await countVeterinarios();
+      setNumeroVeterinarios(veterinarios);
+      const propietarios = await countPropietarios();
+      setNumeroPropietarios(propietarios);
+      const mascotas = await countMascotas();
+      setNumeroMascotas(mascotas);
+      const citas = await countCitas(fechaFormateada);
+      setNumeroCitasHoy(citas);
+      const citasHoy = await getCitasByFecha(fechaFormateada);
+      setCitasRecientes(citasHoy);
+    };
+    fetchStats();
+  }, [codigoUsuario, fechaFormateada]);
 
   const getBadge = (estado) => {
     switch (estado?.toLowerCase()) {
@@ -98,13 +74,34 @@ const AdminDashboard = () => {
 
         {/* tarjetas de resumen */}
         <div className="admin-stats-grid">
-          {stats.map((stat, index) => (
-            <div className="admin-stat-card" key={index}>
-              <div className="admin-stat-icon">{stat.icono}</div>
-              <div className="admin-stat-label">{stat.label}</div>
-              <div className="admin-stat-value">{stat.valor}</div>
+          <div className="admin-stat-card">
+            <FaUserMd size={32} color="#5bb8f5" />
+            <div>
+              <h3>{NumeroVeterinarios}</h3>
+              <p>Veterinarios</p>
             </div>
-          ))}
+          </div>
+          <div className="admin-stat-card">
+            <FaUsers size={32} color="#5bb8f5" />
+            <div>
+              <h3>{NumeroPropietarios}</h3>
+              <p>Propietarios</p>
+            </div>
+          </div>
+          <div className="admin-stat-card">
+            <FaPaw size={32} color="#5bb8f5" />
+            <div>
+              <h3>{NumeroMascotas}</h3>
+              <p>Mascotas</p>
+            </div>
+          </div>
+          <div className="admin-stat-card">
+            <FaClipboardList size={32} color="#5bb8f5" />
+            <div>
+              <h3>{NumeroCitasHoy}</h3>
+              <p>Citas de hoy</p>
+            </div>
+          </div>
         </div>
 
         {/* tabla de citas recientes del dia */}
@@ -136,32 +133,6 @@ const AdminDashboard = () => {
                   </td>
                 </tr>
               ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* tabla de veterinarios activos */}
-        <div className="admin-section-card">
-          <h3>
-            <FaUserMd size={16} color="#5bb8f5" /> Veterinarios activos
-          </h3>
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Especialización</th>
-                <th>Teléfono</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td
-                  colSpan={3}
-                  style={{ textAlign: "center", color: "#4a6278" }}
-                >
-                  Conectando con el backend...
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>

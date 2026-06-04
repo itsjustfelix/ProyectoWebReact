@@ -1,4 +1,4 @@
-.raza-topbar {
+.adm-topbar {
   background: #ffffff;
   height: 68px;
   display: flex;
@@ -11,14 +11,14 @@
   z-index: 50;
 }
 
-.raza-topbar h2 {
+.adm-topbar h2 {
   font-family: "Raleway", sans-serif;
   font-size: 1.1rem;
   font-weight: 800;
   color: #1e3a4f;
 }
 
-.raza-btn-agregar {
+.adm-btn-agregar {
   background: #5bb8f5;
   color: #ffffff;
   border: none;
@@ -34,15 +34,15 @@
   transition: background 0.2s;
 }
 
-.raza-btn-agregar:hover {
+.adm-btn-agregar:hover {
   background: #2e9cdb;
 }
 
-.raza-content {
+.adm-content {
   padding: 28px 32px;
 }
 
-.raza-section-card {
+.adm-section-card {
   background: #ffffff;
   border-radius: 14px;
   padding: 24px;
@@ -50,7 +50,7 @@
   box-shadow: 0 2px 10px rgba(91, 184, 245, 0.08);
 }
 
-.raza-section-card h3 {
+.adm-section-card h3 {
   font-family: "Raleway", sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -61,12 +61,12 @@
   gap: 8px;
 }
 
-.raza-table {
+.adm-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.raza-table th {
+.adm-table th {
   text-align: left;
   font-size: 0.72rem;
   font-weight: 800;
@@ -77,28 +77,27 @@
   border-bottom: 2px solid #e2eaf4;
 }
 
-.raza-table td {
+.adm-table td {
   padding: 12px 14px;
   font-size: 0.88rem;
-  text-transform: capitalize;
   border-bottom: 1px solid #e2eaf4;
   color: #1e3a4f;
 }
 
-.raza-table tr:last-child td {
+.adm-table tr:last-child td {
   border-bottom: none;
 }
 
-.raza-table tr:hover td {
+.adm-table tr:hover td {
   background: #f4f7fa;
 }
 
-.raza-acciones {
+.adm-acciones {
   display: flex;
   gap: 6px;
 }
 
-.raza-empty {
+.adm-empty {
   text-align: center;
   padding: 40px;
   color: #4a6278;
@@ -106,10 +105,10 @@
 }
 
 @media (max-width: 768px) {
-  .raza-topbar {
+  .adm-topbar {
     padding: 0 16px;
   }
-  .raza-content {
+  .adm-content {
     padding: 20px 16px;
   }
 }
