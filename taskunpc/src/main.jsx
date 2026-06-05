@@ -18,6 +18,10 @@ import Especializacion from "./pages/Administrador/Especializacion/Especializaci
 import Raza from "./pages/Administrador/Raza/Raza";
 import Administrador from "./pages/Administrador/Administrador/Administrador";
 import MascotasAdmin from "./pages/Administrador/Mascota/Mascota";
+import VeterinarioLayout from "./pages/Veterinario/VeterianrioLayout/VeterinarioLayout";
+import VetDashboard from "./pages/Veterinario/Dashboard/Dashboard";
+import VetCitas from "./pages/Veterinario/Citas/Citas";
+import VetConsultas from "./pages/Veterinario/Consultas/Consulta";
 import "./index.css";
 import "@fontsource/raleway/400.css";
 import "@fontsource/raleway/600.css";
@@ -50,6 +54,12 @@ createRoot(document.getElementById("root")).render(
           <Route path="razas" element={<Raza />} />
           <Route path="administradores" element={<Administrador />} />
           <Route path="mascotas" element={<MascotasAdmin />} />
+        </Route>
+
+        <Route path="/veterinario" element={<VeterinarioLayout />}>
+          <Route index element={<VetDashboard />} />
+          <Route path="citas" element={<VetCitas />} />
+          <Route path="consultas" element={<VetConsultas />} />
         </Route>
       </Routes>
     </BrowserRouter>

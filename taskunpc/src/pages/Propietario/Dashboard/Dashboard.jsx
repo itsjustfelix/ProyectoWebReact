@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FaCalendarAlt, FaPaw } from "react-icons/fa";
 import "./Dashboard.css";
 import { getCitasByPropietario } from "../../../services/citaService";
+import { formatearFecha } from "../../../utils/FormatearFecha";
+import { formatearHora } from "../../../utils/FormatearHora";
 
 const Dashboard = () => {
   const nombre = localStorage.getItem("nombre");
@@ -86,8 +88,8 @@ const Dashboard = () => {
                   <tr key={cita.codigo}>
                     <td>{cita.nombre_mascota}</td>
                     <td>{cita.nombre_veterinario}</td>
-                    <td>{cita.fecha}</td>
-                    <td>{cita.hora}</td>
+                    <td>{formatearFecha(cita.fecha)}</td>
+                    <td>{formatearHora(cita.hora)}</td>
                     <td>
                       <span className={`badge ${getBadge(cita.estado_cita)}`}>
                         {cita.estado_cita}

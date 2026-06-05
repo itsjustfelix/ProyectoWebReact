@@ -5,9 +5,18 @@ export const getCitasByPropietario = async (codigoUsuario) => {
   return respuesta.data;
 };
 
-export const getCitasByVeterinario = async (cedula_veterinario) => {
-  const respuesta = await api.get(`/citas/veterinario/${cedula_veterinario}`);
+export const getCitasByVeterinario = async (codigo_veterinario) => {
+  const respuesta = await api.get(`/citas/veterinario/${codigo_veterinario}`);
   return respuesta.data;
+};
+
+export const getCitasByVeterionarioAndFecha = async (codigo_veterinario) => {
+  const respuesta = await getCitasByVeterinario(codigo_veterinario);
+  const fechaISO = new Date().toISOString().split("T")[0];
+  const hoy = Array.isArray(respuesta)
+    ? respuesta.filter((c) => c.fecha === fechaISO)
+    : [];
+  return hoy;
 };
 
 export const getCitasByFecha = async (fecha) => {
@@ -39,5 +48,10 @@ export const getHorasOcupadas = async (fecha, cedula_veterinario) => {
   const respuesta = await api.get("/citas/ocupadas", {
     params: { fecha, cedula_veterinario },
   });
+  return respuesta.data;
+};
+
+export const CitaAsistida = async (codigo_cita) => {
+  const respuesta = await api.put(`/citas/atendida/${codigo_cita}`);
   return respuesta.data;
 };

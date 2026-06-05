@@ -2,12 +2,35 @@ import React, { useState, useEffect } from "react";
 import { FaClipboardList, FaFilePdf } from "react-icons/fa";
 import "./Historial.css";
 import { getHistorialByPropietario } from "../../../services/historialService";
+import { formatearFecha } from "../../../utils/FormatearFecha";
+import { getConsultaPDF } from "../../../services/consultaService";
 
 const Historial = () => {
   const codigoUsuario = localStorage.getItem("codigo_usuario");
   const [consultas, setConsultas] = useState([]);
   const [cargando, setCargando] = useState(true);
 
+  const manejarDescargaPDF = async (codigo) => {
+    try {
+      const pdf = await getConsultaPDF(codigo);
+      const urlDescarga = window.URL.createObjectURL(
+        new Blob([pdf], { type: "application/pdf" }),
+      );
+
+      const enlace = document.createElement("a");
+      enlace.href = urlDescarga;
+
+      enlace.setAttribute("download", `consulta_${codigo}.pdf`);
+
+      document.body.appendChild(enlace);
+      enlace.click();
+      document.body.removeChild(enlace);
+
+      window.URL.revokeObjectURL(urlDescarga);
+    } catch (error) {
+      console.error("Error a descargar el pdf:", error);
+    }
+  };
   useEffect(() => {
     const traerHistorial = async () => {
       try {
@@ -46,23 +69,25 @@ const Historial = () => {
                   <tr>
                     <th>Fecha</th>
                     <th>Mascota</th>
+                    <th>Especializacion</th>
                     <th>Veterinario</th>
-                    <th>Diagnóstico</th>
-                    <th>Tratamiento</th>
                     <th>PDF</th>
                   </tr>
                 </thead>
                 <tbody>
                   {consultas.map((consulta) => (
                     <tr key={consulta.codigo}>
-                      <td>{consulta.fecha}</td>
+                      <td>{formatearFecha(consulta.fecha)}</td>
                       <td>{consulta.nombre_mascota}</td>
+                      <td>{consulta.nombre_especializacion}</td>
                       <td>{consulta.nombre_veterinario}</td>
-                      <td className="td-truncate">{consulta.diagnostico}</td>
-                      <td className="td-truncate">{consulta.tratamiento}</td>
                       <td>
-                        <button className="btn-pdf" title="Ver reporte médico">
-                          <FaFilePdf size={12} /> Ver PDF
+                        <button
+                          className="btn-pdf"
+                          title="Ver reporte médico"
+                          onClick={() => manejarDescargaPDF(consulta.codigo)}
+                        >
+                          <FaFilePdf size={12} /> Descargar PDF
                         </button>
                       </td>
                     </tr>

@@ -1,0 +1,336 @@
+/* overlay y contenedor principal del modal de atender cita */
+.atender-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 58, 79, 0.45);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.atender-modal {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 16px 60px rgba(30, 58, 79, 0.2);
+  animation: modalIn 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* cabecera del modal */
+.atender-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  border-bottom: 1.5px solid #e2eaf4;
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  z-index: 10;
+  border-radius: 20px 20px 0 0;
+}
+
+.atender-header h3 {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e3a4f;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.atender-cerrar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #4a6278;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.atender-cerrar:hover {
+  color: #c0392b;
+}
+
+/* cuerpo dividido en dos columnas */
+.atender-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  flex: 1;
+}
+
+/* columna izquierda: formulario de consulta */
+.atender-col-form {
+  padding: 24px 28px;
+  border-right: 1.5px solid #e2eaf4;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.atender-col-form h4 {
+  font-family: "Raleway", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #1e3a4f;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.atender-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.atender-form-group label {
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: #4a6278;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.atender-form-group textarea,
+.atender-form-group input,
+.atender-form-group select {
+  padding: 10px 14px;
+  border: 1.8px solid #e2eaf4;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-size: 0.88rem;
+  color: #1e3a4f;
+  background: #f4f7fa;
+  outline: none;
+  resize: vertical;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.atender-form-group textarea:focus,
+.atender-form-group input:focus,
+.atender-form-group select:focus {
+  border-color: #5bb8f5;
+  background: #ffffff;
+}
+
+.atender-form-group textarea {
+  min-height: 80px;
+}
+
+/* columna derecha: info mascota + historial */
+.atender-col-info {
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+.atender-col-info h4 {
+  font-family: "Raleway", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #1e3a4f;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* chip con info básica de la mascota */
+.atender-mascota-chip {
+  background: #eaf6ff;
+  border: 1.5px solid #c5e8fb;
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.atender-mascota-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #c5e8fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.atender-mascota-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.atender-mascota-datos p {
+  font-size: 0.82rem;
+  color: #4a6278;
+  line-height: 1.7;
+}
+
+.atender-mascota-datos strong {
+  color: #1e3a4f;
+  font-weight: 700;
+}
+
+/* separador de sección */
+.atender-divider {
+  border: none;
+  border-top: 1.5px solid #e2eaf4;
+  margin: 0;
+}
+
+/* lista de consultas anteriores */
+.atender-historial-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.atender-historial-item {
+  background: #f4f7fa;
+  border-radius: 10px;
+  padding: 12px 14px;
+  border-left: 3px solid #5bb8f5;
+}
+
+.atender-historial-item .hist-fecha {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #4a6278;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.atender-historial-item .hist-campo {
+  font-size: 0.8rem;
+  color: #1e3a4f;
+  line-height: 1.5;
+  margin-bottom: 3px;
+}
+
+.atender-historial-item .hist-campo span {
+  font-weight: 700;
+}
+
+.atender-historial-empty {
+  font-size: 0.85rem;
+  color: #4a6278;
+  text-align: center;
+  padding: 16px;
+}
+
+/* pie del modal con acciones */
+.atender-footer {
+  padding: 18px 32px;
+  border-top: 1.5px solid #e2eaf4;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background: #ffffff;
+  border-radius: 0 0 20px 20px;
+}
+
+.btn-atender-guardar {
+  background: #5bb8f5;
+  color: #ffffff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-atender-guardar:hover {
+  background: #2e9cdb;
+}
+
+.btn-atender-guardar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-atender-cancelar {
+  background: #f4f7fa;
+  color: #4a6278;
+  border: 1.5px solid #e2eaf4;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-atender-cancelar:hover {
+  background: #e2eaf4;
+}
+
+.msg-error {
+  color: #c0392b;
+  background: #ffe5e5;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+}
+
+/* cargando historial */
+.atender-cargando {
+  font-size: 0.82rem;
+  color: #4a6278;
+  text-align: center;
+  padding: 12px;
+}
+
+@media (max-width: 768px) {
+  .atender-body {
+    grid-template-columns: 1fr;
+  }
+
+  .atender-col-form {
+    border-right: none;
+    border-bottom: 1.5px solid #e2eaf4;
+  }
+
+  .atender-modal {
+    max-height: 95vh;
+  }
+}

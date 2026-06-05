@@ -1,19 +1,21 @@
-import { FaCalendarAlt, FaClipboardList, FaHome } from "react-icons/fa";
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../../../components/SideBar/SideBar";
+import "./VeterinarioLayout.css";
+import { links } from "./SideBardData";
 
-export const links = [
-  {
-    to: "/veterinario",
-    icono: <FaHome size={16} />,
-    label: "Inicio",
-  },
-  {
-    to: "/veterinario/citas",
-    icono: <FaCalendarAlt size={16} />,
-    label: "citas",
-  },
-  {
-    to: "/veterinario/historial",
-    icono: <FaClipboardList size={16} />,
-    label: "Consultas",
-  },
-];
+const VeterinarioLayout = () => {
+  const nombre = localStorage.getItem("nombre") || "Veterinario";
+  const rol = localStorage.getItem("rol");
+
+  return (
+    <div className="veterinario-layout">
+      <Sidebar links={links} usuario={{ nombre }} rol={rol} />
+      <div className="veterinario-contenido">
+        <Outlet />
+      </div>
+    </div>
+  );
+};
+
+export default VeterinarioLayout;

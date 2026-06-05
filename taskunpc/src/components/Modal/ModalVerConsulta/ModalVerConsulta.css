@@ -1,0 +1,190 @@
+/* overlay del modal de ver consulta */
+.ver-consulta-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 58, 79, 0.45);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.ver-consulta-modal {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 16px 60px rgba(30, 58, 79, 0.2);
+  animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* cabecera */
+.ver-consulta-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 28px;
+  border-bottom: 1.5px solid #e2eaf4;
+}
+
+.ver-consulta-header h3 {
+  font-family: "Raleway", sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1e3a4f;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ver-consulta-cerrar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #4a6278;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.ver-consulta-cerrar:hover {
+  color: #c0392b;
+}
+
+/* cuerpo del modal */
+.ver-consulta-body {
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* chip de info de mascota */
+.ver-consulta-mascota {
+  background: #eaf6ff;
+  border: 1.5px solid #c5e8fb;
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ver-consulta-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #c5e8fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ver-consulta-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ver-consulta-mascota-datos p {
+  font-size: 0.82rem;
+  color: #4a6278;
+  line-height: 1.7;
+}
+
+.ver-consulta-mascota-datos strong {
+  color: #1e3a4f;
+  font-weight: 700;
+}
+
+/* separador */
+.ver-consulta-divider {
+  border: none;
+  border-top: 1.5px solid #e2eaf4;
+  margin: 0;
+}
+
+/* sección de campos de la consulta */
+.ver-consulta-seccion h4 {
+  font-family: "Raleway", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #4a6278;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ver-consulta-campo {
+  background: #f4f7fa;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+}
+
+.ver-consulta-campo label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #4a6278;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 4px;
+}
+
+.ver-consulta-campo p {
+  font-size: 0.88rem;
+  color: #1e3a4f;
+  line-height: 1.6;
+}
+
+.ver-consulta-campo p.vacio {
+  color: #9bb3cc;
+  font-style: italic;
+}
+
+/* pie */
+.ver-consulta-footer {
+  padding: 16px 28px;
+  border-top: 1.5px solid #e2eaf4;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-ver-cerrar {
+  background: #f4f7fa;
+  color: #4a6278;
+  border: 1.5px solid #e2eaf4;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-ver-cerrar:hover {
+  background: #e2eaf4;
+}

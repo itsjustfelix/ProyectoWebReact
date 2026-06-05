@@ -10,6 +10,11 @@ export const getMascotas = async () => {
   return respuesta.data;
 };
 
+export const getInfoMascotaByCodigo = async (codigo_mascota) => {
+  const respuesta = await api.get(`/mascotas/${codigo_mascota}`);
+  return respuesta.data;
+};
+
 export const saveMascota = async (mascotaData) => {
   const respuesta = await api.post("/mascotas", mascotaData);
   return respuesta.data;
