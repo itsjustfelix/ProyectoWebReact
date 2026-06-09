@@ -9,7 +9,6 @@ const ModalRefrescarSesion = ({ onCerrar }) => {
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState("");
 
-  /* llama al endpoint de refresh y guarda el nuevo token */
   const handleRefrescar = async () => {
     setCargando(true);
     setError("");
@@ -26,7 +25,6 @@ const ModalRefrescarSesion = ({ onCerrar }) => {
     }
   };
 
-  /* cierra sesión y manda al login */
   const handleCerrarSesion = () => {
     localStorage.clear();
     navigate("/login");

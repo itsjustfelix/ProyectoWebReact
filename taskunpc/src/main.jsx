@@ -18,6 +18,8 @@ import Especializacion from "./pages/Administrador/Especializacion/Especializaci
 import Raza from "./pages/Administrador/Raza/Raza";
 import Administrador from "./pages/Administrador/Administrador/Administrador";
 import MascotasAdmin from "./pages/Administrador/Mascota/Mascota";
+import CitaAdmin from "./pages/Administrador/Cita/Cita";
+import ConsultaAdmin from "./pages/Administrador/Consulta/Consulta";
 import VeterinarioLayout from "./pages/Veterinario/VeterianrioLayout/VeterinarioLayout";
 import VetDashboard from "./pages/Veterinario/Dashboard/Dashboard";
 import VetCitas from "./pages/Veterinario/Citas/Citas";
@@ -54,6 +56,8 @@ createRoot(document.getElementById("root")).render(
           <Route path="razas" element={<Raza />} />
           <Route path="administradores" element={<Administrador />} />
           <Route path="mascotas" element={<MascotasAdmin />} />
+          <Route path="citas" element={<CitaAdmin />} />
+          <Route path="consultas" element={<ConsultaAdmin />} />
         </Route>
 
         <Route path="/veterinario" element={<VeterinarioLayout />}>

@@ -5,7 +5,7 @@ import { saveEspecializacion } from "../../../services/especializacionesService"
 
 const ModalRegistrarEspecializacion = ({ onCerrar, onGuardado }) => {
   const [nombre, setNombre] = useState("");
-  const [error, setError] = useState("");
+  const [errores, setErrores] = useState([]);
 
   const handleGuardar = async (e) => {
     e.preventDefault();
@@ -14,10 +14,14 @@ const ModalRegistrarEspecializacion = ({ onCerrar, onGuardado }) => {
       onGuardado();
       onCerrar();
     } catch (error) {
-      setError(
-        "Error al registrar la especialización: " +
-          error.response?.data?.detail?.error?.message,
-      );
+      const detail = error.response?.data?.detail;
+      if (Array.isArray(detail)) {
+        setErrores(detail.map((err) => err.msg.replace("Value error, ", "")));
+      } else {
+        setErrores([
+          "Error al registrar la especialización: " + detail?.error?.message,
+        ]);
+      }
     }
   };
 
@@ -42,7 +46,7 @@ const ModalRegistrarEspecializacion = ({ onCerrar, onGuardado }) => {
                 value={nombre}
                 onChange={(e) => {
                   setNombre(e.target.value);
-                  setError("");
+                  if (errores.length) setErrores([]);
                 }}
                 placeholder="Ej: Cardiología"
                 required
@@ -50,7 +54,13 @@ const ModalRegistrarEspecializacion = ({ onCerrar, onGuardado }) => {
             </div>
           </div>
 
-          {error && <p className="msg-error">{error}</p>}
+          {errores.length > 0 && (
+            <ul className="msg-error">
+              {errores.map((msg, i) => (
+                <li key={i}>{msg}</li>
+              ))}
+            </ul>
+          )}
 
           <div className="modal-acciones">
             <button

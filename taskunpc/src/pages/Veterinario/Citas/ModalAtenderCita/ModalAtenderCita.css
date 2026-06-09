@@ -1,4 +1,3 @@
-/* overlay y contenedor principal del modal de atender cita */
 .atender-overlay {
   position: fixed;
   inset: 0;
@@ -74,7 +73,6 @@
   color: #c0392b;
 }
 
-/* cuerpo dividido en dos columnas */
 .atender-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -82,7 +80,6 @@
   flex: 1;
 }
 
-/* columna izquierda: formulario de consulta */
 .atender-col-form {
   padding: 24px 28px;
   border-right: 1.5px solid #e2eaf4;
@@ -144,7 +141,6 @@
   min-height: 80px;
 }
 
-/* columna derecha: info mascota + historial */
 .atender-col-info {
   padding: 24px 28px;
   display: flex;
@@ -164,7 +160,6 @@
   gap: 6px;
 }
 
-/* chip con info básica de la mascota */
 .atender-mascota-chip {
   background: #eaf6ff;
   border: 1.5px solid #c5e8fb;
@@ -204,14 +199,12 @@
   font-weight: 700;
 }
 
-/* separador de sección */
 .atender-divider {
   border: none;
   border-top: 1.5px solid #e2eaf4;
   margin: 0;
 }
 
-/* lista de consultas anteriores */
 .atender-historial-lista {
   display: flex;
   flex-direction: column;
@@ -254,7 +247,6 @@
   padding: 16px;
 }
 
-/* pie del modal con acciones */
 .atender-footer {
   padding: 18px 32px;
   border-top: 1.5px solid #e2eaf4;
@@ -312,7 +304,6 @@
   font-size: 0.82rem;
 }
 
-/* cargando historial */
 .atender-cargando {
   font-size: 0.82rem;
   color: #4a6278;

@@ -11,10 +11,7 @@ export const getPropietario = async () => {
 };
 
 export const updatePropietario = async (propietario) => {
-  const respuesta = await api.put(
-    `/propietarios/${propietario.cedula}`,
-    propietario,
-  );
+  const respuesta = await api.put(`/propietarios/`, propietario);
   return respuesta.data;
 };
 

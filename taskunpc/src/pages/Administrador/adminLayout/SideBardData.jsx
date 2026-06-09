@@ -6,6 +6,8 @@ import {
   FaDog,
   FaStar,
   FaUserShield,
+  FaCalendarAlt,
+  FaClipboardList,
 } from "react-icons/fa";
 
 export const links = [
@@ -32,5 +34,15 @@ export const links = [
     to: "/admin/especializaciones",
     icono: <FaStar size={16} />,
     label: "Especializaciones",
+  },
+  {
+    to: "/admin/citas",
+    icono: <FaCalendarAlt size={16} />,
+    label: "Citas",
+  },
+  {
+    to: "/admin/consultas",
+    icono: <FaClipboardList size={16} />,
+    label: "Consultas",
   },
 ];

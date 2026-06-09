@@ -6,42 +6,45 @@ import { savePropietario } from "../../services/propietarioService";
 
 const Registro = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [errores, setErrores] = useState([]);
   const [exito, setExito] = useState("");
   const [form, setForm] = useState({
     nombreCompleto: "",
     cedula: "",
     telefono: "",
     sexo: "",
-    correo: "",
+    email: "",
     contraseña: "",
     confirmarContraseña: "",
   });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    if (error) setError("");
+    if (errores.length) setErrores([]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (form.contraseña !== form.confirmarContraseña) {
-      return setError("Las contraseñas no coinciden");
+      setErrores(["Las contraseñas no coinciden"]);
+      return;
     }
 
     try {
       await savePropietario(form);
-
-      setError("");
+      setErrores([]);
       setExito("¡Cuenta creada exitosamente! Redirigiendo...");
-
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
-      const msg =
-        err.response?.data?.detail?.error?.message ||
-        "Error al conectar con el servidor";
-      setError(msg);
+      const detail = err.response?.data?.detail;
+      if (Array.isArray(detail)) {
+        setErrores(detail.map((e) => e.msg.replace("Value error, ", "")));
+      } else {
+        setErrores([
+          detail?.error?.message || "Error al conectar con el servidor",
+        ]);
+      }
     }
   };
 
@@ -71,7 +74,8 @@ const Registro = () => {
             <div className="form-group">
               <label>Cédula</label>
               <input
-                type="text"
+                type="number"
+                inputMode="numeric"
                 name="cedula"
                 value={form.cedula}
                 onChange={handleChange}
@@ -83,7 +87,8 @@ const Registro = () => {
             <div className="form-group">
               <label>Teléfono</label>
               <input
-                type="tel"
+                type="number"
+                inputMode="numeric"
                 name="telefono"
                 value={form.telefono}
                 onChange={handleChange}
@@ -110,8 +115,8 @@ const Registro = () => {
               <label>Correo electrónico</label>
               <input
                 type="email"
-                name="correo"
-                value={form.correo}
+                name="email"
+                value={form.email}
                 onChange={handleChange}
                 required
                 placeholder="correo@ejemplo.com"
@@ -141,7 +146,13 @@ const Registro = () => {
             </div>
           </div>
 
-          {error && <p className="msg-error">{error}</p>}
+          {errores.length > 0 && (
+            <ul className="msg-error">
+              {errores.map((msg, i) => (
+                <li key={i}>{msg}</li>
+              ))}
+            </ul>
+          )}
           {exito && <p className="msg-exito">{exito}</p>}
 
           <button type="submit" className="registro-btn">

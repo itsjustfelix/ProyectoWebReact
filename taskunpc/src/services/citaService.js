@@ -1,5 +1,10 @@
 import api from "./api";
 
+export const getCitas = async () => {
+  const respuesta = await api.get("/citas");
+  return respuesta.data;
+};
+
 export const getCitasByPropietario = async (codigoUsuario) => {
   const respuesta = await api.get(`/citas/propietario/${codigoUsuario}`);
   return respuesta.data;

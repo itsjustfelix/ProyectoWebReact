@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { FaClipboardList, FaFilePdf } from "react-icons/fa";
+import { FaClipboardList, FaEye, FaFilePdf } from "react-icons/fa";
 import "./Historial.css";
 import { getHistorialByPropietario } from "../../../services/historialService";
 import { formatearFecha } from "../../../utils/FormatearFecha";
 import { getConsultaPDF } from "../../../services/consultaService";
+import ModalVerConsulta from "../../../components/Modal/ModalVerConsulta/ModalVerConsulta";
 
 const Historial = () => {
   const codigoUsuario = localStorage.getItem("codigo_usuario");
   const [consultas, setConsultas] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [consultaAVer, setConsultaAVer] = useState(null);
 
   const manejarDescargaPDF = async (codigo) => {
     try {
@@ -71,7 +73,7 @@ const Historial = () => {
                     <th>Mascota</th>
                     <th>Especializacion</th>
                     <th>Veterinario</th>
-                    <th>PDF</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -90,6 +92,14 @@ const Historial = () => {
                           <FaFilePdf size={12} /> Descargar PDF
                         </button>
                       </td>
+                      <td>
+                        <button
+                          className="btn-ver-detalle"
+                          onClick={() => setConsultaAVer(consulta)}
+                        >
+                          <FaEye size={11} /> Ver detalle
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -98,6 +108,12 @@ const Historial = () => {
           )}
         </div>
       </div>
+      {consultaAVer && (
+        <ModalVerConsulta
+          consulta={consultaAVer}
+          onCerrar={() => setConsultaAVer(null)}
+        />
+      )}
     </>
   );
 };

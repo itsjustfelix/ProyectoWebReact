@@ -41,7 +41,11 @@ export const deleteConsulta = async (codigo_consulta) => {
 
 export const countConsultasVeterinario = async (codigo_veterinario) => {
   const respuesta = await getConsultaByVeterinario(codigo_veterinario);
-  return respuesta.length;
+  const fechaISO = new Date().toISOString().split("T")[0];
+  const hoy = Array.isArray(respuesta)
+    ? respuesta.filter((c) => c.fecha === fechaISO)
+    : [];
+  return hoy.length;
 };
 
 export const getConsultaPDF = async (codigo) => {

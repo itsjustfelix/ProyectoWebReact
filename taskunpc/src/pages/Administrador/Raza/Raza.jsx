@@ -3,7 +3,7 @@ import "./Raza.css";
 import { getRazas, deleteRaza } from "../../../services/razaService";
 import { FaEdit, FaTrash, FaPlus, FaDog } from "react-icons/fa";
 import ModalRegistrarRaza from "../../../components/Modal/ModalRegistrarRaza/ModalRegistrarRaza";
-import ModalEditarRaza from "../../../components/Modal/ModalEditarRaza/ModalEliminarRaza";
+import ModalEditarRaza from "../../../components/Modal/ModalEditarRaza/ModalEditarRaza";
 import ModalEliminarRaza from "../../../components/Modal/ModalEliminarRaza/ModalEliminarRaza";
 
 const Raza = () => {

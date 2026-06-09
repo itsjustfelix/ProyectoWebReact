@@ -14,7 +14,7 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
   const [cedula, setCedula] = useState("");
   const [propietario, setPropietario] = useState(null);
   const [buscando, setBuscando] = useState(false);
-  const [errorBusqueda, setErrorBusqueda] = useState("");
+  const [erroresBusqueda, setErroresBusqueda] = useState([]);
 
   const [especies, setEspecies] = useState([]);
   const [razasFiltradas, setRazasFiltradas] = useState([]);
@@ -25,7 +25,7 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
     codigo_especie: "",
     codigo_raza: "",
   });
-  const [error, setError] = useState("");
+  const [errores, setErrores] = useState([]);
   const [guardando, setGuardando] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,9 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
       const traerEspecies = async () => {
         try {
           const respuesta = await getEspecies();
-          setEspecies(Array.isArray(respuesta) ? respuesta : []);
+          setEspecies(
+            Array.isArray(respuesta) ? respuesta : respuesta.data || [],
+          );
         } catch (error) {
           console.error(
             "Error al traer especies:",
@@ -49,7 +51,7 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
     e.preventDefault();
     if (!cedula.trim()) return;
     setBuscando(true);
-    setErrorBusqueda("");
+    setErroresBusqueda([]);
     try {
       const datos = await getPropietarioPorCedula(cedula.trim());
       setPropietario({
@@ -59,11 +61,20 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
       });
       setPaso(2);
     } catch (error) {
-      const codigo = error.response?.data?.detail?.error?.code;
-      if (codigo === "NOT_FOUND") {
-        setErrorBusqueda("No se encontró un propietario con esa cédula.");
+      const detail = error.response?.data?.detail;
+      if (Array.isArray(detail)) {
+        setErroresBusqueda(
+          detail.map((err) => err.msg.replace("Value error, ", "")),
+        );
       } else {
-        setErrorBusqueda("Error al buscar el propietario. Intenta de nuevo.");
+        const codigo = detail?.error?.code;
+        if (codigo === "NOT_FOUND") {
+          setErroresBusqueda(["No se encontró un propietario con esa cédula."]);
+        } else {
+          setErroresBusqueda([
+            "Error al buscar el propietario. Intenta de nuevo.",
+          ]);
+        }
       }
     } finally {
       setBuscando(false);
@@ -81,7 +92,7 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
   const handleChange = async (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    if (error) setError("");
+    if (errores.length) setErrores([]);
 
     if (name === "codigo_especie") {
       try {
@@ -91,7 +102,9 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
           return;
         }
         const respuesta = await getRazasByCodigoEspecie(value);
-        setRazasFiltradas(Array.isArray(respuesta) ? respuesta : []);
+        setRazasFiltradas(
+          Array.isArray(respuesta) ? respuesta : respuesta.data || [],
+        );
         setForm((prev) => ({ ...prev, codigo_raza: "" }));
       } catch (error) {
         console.error(
@@ -123,10 +136,14 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
       onGuardado();
       onCerrar();
     } catch (error) {
-      setError(
-        "Error al registrar la mascota: " +
-          error.response?.data?.detail?.error?.message,
-      );
+      const detail = error.response?.data?.detail;
+      if (Array.isArray(detail)) {
+        setErrores(detail.map((err) => err.msg.replace("Value error, ", "")));
+      } else {
+        setErrores([
+          "Error al registrar la mascota: " + detail?.error?.message,
+        ]);
+      }
     } finally {
       setGuardando(false);
     }
@@ -144,7 +161,6 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
           </button>
         </div>
 
-        {/* paso 1: buscar propietario por cedula */}
         {paso === 1 && (
           <form onSubmit={handleBuscarPropietario}>
             <div className="modal-grid">
@@ -155,7 +171,7 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
                   value={cedula}
                   onChange={(e) => {
                     setCedula(e.target.value);
-                    setErrorBusqueda("");
+                    if (erroresBusqueda.length) setErroresBusqueda([]);
                   }}
                   placeholder="Ej: 1234567890"
                   required
@@ -163,7 +179,13 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
               </div>
             </div>
 
-            {errorBusqueda && <p className="msg-error">{errorBusqueda}</p>}
+            {erroresBusqueda.length > 0 && (
+              <ul className="msg-error">
+                {erroresBusqueda.map((msg, i) => (
+                  <li key={i}>{msg}</li>
+                ))}
+              </ul>
+            )}
 
             <div className="modal-acciones">
               <button
@@ -181,10 +203,8 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
           </form>
         )}
 
-        {/* paso 2: llenar datos de la mascota */}
         {paso === 2 && (
           <form onSubmit={handleGuardar}>
-            {/* chip que muestra el propietario encontrado */}
             <div className="mascota-admin-propietario-chip">
               <FaCheckCircle color="#1e8449" size={14} />
               <span>
@@ -207,7 +227,6 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
             </div>
 
             <div className="modal-grid">
-              {/* foto de la mascota */}
               <div className="modal-form-group modal-full">
                 <label>Foto de la mascota</label>
                 <div className="foto-preview-container">
@@ -281,7 +300,13 @@ const ModalRegistrarMascota = ({ onCerrar, onGuardado }) => {
               </div>
             </div>
 
-            {error && <p className="msg-error">{error}</p>}
+            {errores.length > 0 && (
+              <ul className="msg-error">
+                {errores.map((msg, i) => (
+                  <li key={i}>{msg}</li>
+                ))}
+              </ul>
+            )}
 
             <div className="modal-acciones">
               <button

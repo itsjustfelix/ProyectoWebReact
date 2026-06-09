@@ -11,10 +11,7 @@ export const saveAdministrador = async (administrador) => {
 };
 
 export const updateAdministrador = async (administrador) => {
-  const respuesta = await api.put(
-    `/administradores/${administrador.cedula}`,
-    administrador,
-  );
+  const respuesta = await api.put(`/administradores/`, administrador);
   return respuesta.data;
 };
 

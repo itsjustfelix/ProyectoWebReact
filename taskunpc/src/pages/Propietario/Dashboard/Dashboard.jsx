@@ -10,7 +10,6 @@ const Dashboard = () => {
   const codigoUsuario = localStorage.getItem("codigo_usuario");
   const [citas, setCitas] = useState([]);
   const [cargando, setCargando] = useState(true);
-
   const fechaHoy = new Date().toLocaleDateString("es-CO", {
     weekday: "long",
     year: "numeric",
@@ -22,7 +21,7 @@ const Dashboard = () => {
     const traerCitas = async () => {
       try {
         const datos = await getCitasByPropietario(codigoUsuario);
-        setCitas(datos);
+        setCitas(Array.isArray(datos) ? datos : []);
       } catch (error) {
         console.error("Error al traer citas:", error);
       } finally {
@@ -37,14 +36,20 @@ const Dashboard = () => {
     switch (estado?.toLowerCase()) {
       case "pendiente":
         return "badge-yellow";
-      case "Asistida":
+      case "asistida":
         return "badge-green";
       case "cancelada":
         return "badge-red";
-      case "No Asistio":
+      case "no asistio":
+        return "badge-grey";
+      default:
         return "badge-grey";
     }
   };
+
+  const citasPendientes = citas.filter(
+    (cita) => cita.estado_cita?.toLowerCase() === "pendiente",
+  );
 
   return (
     <>
@@ -57,7 +62,6 @@ const Dashboard = () => {
           <h1>
             ¡Bienvenido, {nombre}! <FaPaw color="#5bb8f5" />
           </h1>
-
           <p>{fechaHoy}</p>
         </div>
 
@@ -68,9 +72,9 @@ const Dashboard = () => {
 
           {cargando ? (
             <p className="dashboard-empty">Cargando citas...</p>
-          ) : citas.length === 0 ? (
+          ) : citasPendientes.length === 0 ? (
             <p className="dashboard-empty">
-              No tienes citas próximas agendadas.
+              No tienes citas próximas agendadas o pendientes.
             </p>
           ) : (
             <table className="dashboard-table">
@@ -84,7 +88,7 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {citas.map((cita) => (
+                {citasPendientes.map((cita) => (
                   <tr key={cita.codigo}>
                     <td>{cita.nombre_mascota}</td>
                     <td>{cita.nombre_veterinario}</td>

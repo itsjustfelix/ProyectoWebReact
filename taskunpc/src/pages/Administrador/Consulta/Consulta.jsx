@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { FaClipboardList, FaEye } from "react-icons/fa";
 import "./Consulta.css";
-import { getConsultaByVeterinario } from "../../../services/consultaService";
+import { getConsultas } from "../../../services/consultaService";
 import { formatearFecha } from "../../../utils/FormatearFecha";
 import ModalVerConsulta from "../../../components/Modal/ModalVerConsulta/ModalVerConsulta";
 
@@ -15,7 +15,7 @@ const Consultas = () => {
   const traerConsultas = useCallback(async () => {
     try {
       setCargando(true);
-      const datos = await getConsultaByVeterinario(cedulaVeterinario);
+      const datos = await getConsultas();
       setConsultas(Array.isArray(datos) ? datos : []);
     } catch (error) {
       console.error(
@@ -25,7 +25,7 @@ const Consultas = () => {
     } finally {
       setCargando(false);
     }
-  }, [cedulaVeterinario]);
+  }, []);
 
   useEffect(() => {
     if (cedulaVeterinario) traerConsultas();
@@ -34,22 +34,19 @@ const Consultas = () => {
   return (
     <>
       <div className="vet-consultas-topbar">
-        <h2>Mis Consultas</h2>
+        <h2>Consultas</h2>
       </div>
 
       <div className="vet-consultas-content">
         <div className="vet-consultas-section-card">
           <h3>
             <FaClipboardList size={16} color="#5bb8f5" /> Historial de consultas
-            atendidas
           </h3>
 
           {cargando ? (
             <p className="vet-consultas-empty">Cargando consultas...</p>
           ) : consultas.length === 0 ? (
-            <p className="vet-consultas-empty">
-              No has registrado consultas todavía.
-            </p>
+            <p className="vet-consultas-empty">No hay consultas todavía.</p>
           ) : (
             <table className="vet-consultas-table">
               <thead>

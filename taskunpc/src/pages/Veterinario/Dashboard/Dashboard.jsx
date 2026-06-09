@@ -27,11 +27,9 @@ const Dashboard = () => {
       try {
         setCargando(true);
 
-        /* trae las citas del veterinario y filtra solo las de hoy */
         const ciatsHoy = await getCitasByVeterionarioAndFecha(codigo);
         setCitasHoy(ciatsHoy);
 
-        /* cuenta cuántas consultas atendió hoy */
         const consultasHoy = await countConsultasVeterinario(codigo);
         setTotalConsultasHoy(consultasHoy);
       } catch (error) {
@@ -47,7 +45,6 @@ const Dashboard = () => {
     if (codigo) cargarDatos();
   }, [codigo, fechaISO]);
 
-  /* devuelve la clase del badge según el estado de la cita */
   const getBadge = (estado) => {
     switch (estado?.toLowerCase()) {
       case "pendiente":
@@ -92,7 +89,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* tabla resumen de citas del día */}
         <div className="vet-dash-section-card">
           <h3>
             <FaStethoscope size={16} color="#5bb8f5" /> Citas de hoy
@@ -109,8 +105,6 @@ const Dashboard = () => {
               <thead>
                 <tr>
                   <th>Mascota</th>
-                  <th>Propietario</th>
-                  <th>Especialización</th>
                   <th>Hora</th>
                   <th>Estado</th>
                 </tr>
@@ -119,8 +113,6 @@ const Dashboard = () => {
                 {citasHoy.map((cita) => (
                   <tr key={cita.codigo}>
                     <td>{cita.nombre_mascota}</td>
-                    <td>{cita.nombre_propietario}</td>
-                    <td>{cita.nombre_especializacion}</td>
                     <td>{formatearHora(cita.hora)}</td>
                     <td>
                       <span className={`badge ${getBadge(cita.estado_cita)}`}>

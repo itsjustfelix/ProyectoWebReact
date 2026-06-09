@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { FaCalendarAlt, FaStethoscope } from "react-icons/fa";
 import "./Citas.css";
 import {
-  getCitasByVeterinario,
   CitaAsistida,
+  getCitasByVeterionarioAndFecha,
 } from "../../../services/citaService";
 import { formatearHora } from "../../../utils/FormatearHora";
 import ModalAtenderCita from "./ModalAtenderCita/ModalAtenderCita";
@@ -21,11 +21,10 @@ const Citas = () => {
     month: "long",
   });
 
-  /* trae las citas del día del veterinario */
   const traerCitas = useCallback(async () => {
     try {
       setCargando(true);
-      const citas = await getCitasByVeterinario(cedulaVeterinario);
+      const citas = await getCitasByVeterionarioAndFecha(cedulaVeterinario);
       setCitas(citas);
     } catch (error) {
       console.error(
@@ -41,7 +40,6 @@ const Citas = () => {
     if (cedulaVeterinario) traerCitas();
   }, [cedulaVeterinario, traerCitas]);
 
-  /* devuelve la clase del badge según el estado */
   const getBadge = (estado) => {
     switch (estado?.toLowerCase()) {
       case "pendiente":
@@ -116,10 +114,17 @@ const Citas = () => {
         <ModalAtenderCita
           cita={citaAAtender}
           onCerrar={() => setCitaAAtender(null)}
-          onAtendida={() => {
-            CitaAsistida(citaAAtender.codigo);
-            setCitaAAtender(null);
-            traerCitas();
+          onAtendida={async () => {
+            try {
+              await CitaAsistida(citaAAtender.codigo);
+              setCitaAAtender(null);
+              await traerCitas();
+            } catch (error) {
+              console.error(
+                "Error al procesar la asistencia de la cita:",
+                error,
+              );
+            }
           }}
         />
       )}

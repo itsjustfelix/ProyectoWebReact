@@ -95,9 +95,7 @@ const ModalAtenderCita = ({ cita, onCerrar, onAtendida }) => {
           </button>
         </div>
 
-        {/* cuerpo dividido en dos columnas */}
         <div className="atender-body">
-          {/* columna izquierda: formulario de consulta */}
           <div className="atender-col-form">
             <h4>
               <FaStethoscope size={13} color="#5bb8f5" /> Registrar consulta
@@ -177,7 +175,6 @@ const ModalAtenderCita = ({ cita, onCerrar, onAtendida }) => {
 
             <hr className="atender-divider" />
 
-            {/* historial de consultas anteriores */}
             <div>
               <h4>
                 <FaClipboardList size={13} color="#5bb8f5" /> Consultas

@@ -1,4 +1,3 @@
-/* overlay del modal de ver consulta */
 .ver-consulta-overlay {
   position: fixed;
   inset: 0;
@@ -32,7 +31,6 @@
   }
 }
 
-/* cabecera */
 .ver-consulta-header {
   display: flex;
   align-items: center;
@@ -67,7 +65,6 @@
   color: #c0392b;
 }
 
-/* cuerpo del modal */
 .ver-consulta-body {
   padding: 24px 28px;
   display: flex;
@@ -75,7 +72,6 @@
   gap: 20px;
 }
 
-/* chip de info de mascota */
 .ver-consulta-mascota {
   background: #eaf6ff;
   border: 1.5px solid #c5e8fb;
@@ -115,14 +111,12 @@
   font-weight: 700;
 }
 
-/* separador */
 .ver-consulta-divider {
   border: none;
   border-top: 1.5px solid #e2eaf4;
   margin: 0;
 }
 
-/* sección de campos de la consulta */
 .ver-consulta-seccion h4 {
   font-family: "Raleway", sans-serif;
   font-size: 0.82rem;

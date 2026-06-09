@@ -7,13 +7,15 @@ import { getEspecies } from "../../../services/especieService";
 const ModalRegistrarRaza = ({ onCerrar, onGuardado }) => {
   const [especies, setEspecies] = useState([]);
   const [form, setForm] = useState({ nombre: "", codigo_especie: "" });
-  const [error, setError] = useState("");
+  const [errores, setErrores] = useState([]);
 
   useEffect(() => {
     const traerEspecies = async () => {
       try {
         const respuesta = await getEspecies();
-        setEspecies(Array.isArray(respuesta) ? respuesta : []);
+        setEspecies(
+          Array.isArray(respuesta) ? respuesta : respuesta.data || [],
+        );
       } catch (error) {
         console.error(
           "Error al traer especies:",
@@ -27,7 +29,7 @@ const ModalRegistrarRaza = ({ onCerrar, onGuardado }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    if (error) setError("");
+    if (errores.length) setErrores([]);
   };
 
   const handleGuardar = async (e) => {
@@ -37,10 +39,12 @@ const ModalRegistrarRaza = ({ onCerrar, onGuardado }) => {
       onGuardado();
       onCerrar();
     } catch (error) {
-      setError(
-        "Error al registrar la raza: " +
-          error.response?.data?.detail?.error?.message,
-      );
+      const detail = error.response?.data?.detail;
+      if (Array.isArray(detail)) {
+        setErrores(detail.map((err) => err.msg.replace("Value error, ", "")));
+      } else {
+        setErrores(["Error al registrar la raza: " + detail?.error?.message]);
+      }
     }
   };
 
@@ -88,7 +92,13 @@ const ModalRegistrarRaza = ({ onCerrar, onGuardado }) => {
             </div>
           </div>
 
-          {error && <p className="msg-error">{error}</p>}
+          {errores.length > 0 && (
+            <ul className="msg-error">
+              {errores.map((msg, i) => (
+                <li key={i}>{msg}</li>
+              ))}
+            </ul>
+          )}
 
           <div className="modal-acciones">
             <button

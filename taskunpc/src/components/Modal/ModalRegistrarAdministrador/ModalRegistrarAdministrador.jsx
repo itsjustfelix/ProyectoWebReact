@@ -12,18 +12,18 @@ const ModalRegistrarAdministrador = ({ onCerrar, onGuardado }) => {
     contraseña: "",
     confirmarContraseña: "",
   });
-  const [error, setError] = useState("");
+  const [errores, setErrores] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    if (error) setError("");
+    if (errores.length) setErrores([]);
   };
 
   const handleGuardar = async (e) => {
     e.preventDefault();
     if (form.contraseña !== form.confirmarContraseña) {
-      setError("Las contraseñas no coinciden");
+      setErrores(["Las contraseñas no coinciden"]);
       return;
     }
     try {
@@ -31,10 +31,14 @@ const ModalRegistrarAdministrador = ({ onCerrar, onGuardado }) => {
       onGuardado();
       onCerrar();
     } catch (error) {
-      setError(
-        "Error al registrar el administrador: " +
-          error.response?.data?.detail?.error?.message,
-      );
+      const detail = error.response?.data?.detail;
+      if (Array.isArray(detail)) {
+        setErrores(detail.map((err) => err.msg.replace("Value error, ", "")));
+      } else {
+        setErrores([
+          "Error al registrar el administrador: " + detail?.error?.message,
+        ]);
+      }
     }
   };
 
@@ -55,7 +59,8 @@ const ModalRegistrarAdministrador = ({ onCerrar, onGuardado }) => {
             <div className="modal-form-group">
               <label>Cédula</label>
               <input
-                type="text"
+                type="number"
+                inputMode="numeric"
                 name="cedula"
                 value={form.cedula}
                 onChange={handleChange}
@@ -79,7 +84,8 @@ const ModalRegistrarAdministrador = ({ onCerrar, onGuardado }) => {
             <div className="modal-form-group">
               <label>Teléfono</label>
               <input
-                type="tel"
+                type="number"
+                inputMode="numeric"
                 name="telefono"
                 value={form.telefono}
                 onChange={handleChange}
@@ -123,7 +129,13 @@ const ModalRegistrarAdministrador = ({ onCerrar, onGuardado }) => {
             </div>
           </div>
 
-          {error && <p className="msg-error">{error}</p>}
+          {errores.length > 0 && (
+            <ul className="msg-error">
+              {errores.map((msg, i) => (
+                <li key={i}>{msg}</li>
+              ))}
+            </ul>
+          )}
 
           <div className="modal-acciones">
             <button

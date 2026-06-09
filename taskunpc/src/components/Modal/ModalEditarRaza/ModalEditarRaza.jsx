@@ -9,7 +9,7 @@ const ModalEditarRaza = ({ raza, onCerrar, onEditado }) => {
   const [form, setForm] = useState({
     codigo: raza.codigo,
     nombre: raza.nombre,
-    codigo_especie: raza.codigo_especie || "",
+    codigo_especie: raza.codigo_especie,
   });
   const [error, setError] = useState("");
 
@@ -17,7 +17,10 @@ const ModalEditarRaza = ({ raza, onCerrar, onEditado }) => {
     const traerEspecies = async () => {
       try {
         const respuesta = await getEspecies();
-        setEspecies(Array.isArray(respuesta) ? respuesta : []);
+
+        setEspecies(
+          Array.isArray(respuesta) ? respuesta : respuesta.data || [],
+        );
       } catch (error) {
         console.error(
           "Error al traer especies:",
