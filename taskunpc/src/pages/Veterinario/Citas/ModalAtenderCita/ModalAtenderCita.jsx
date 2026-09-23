@@ -66,7 +66,7 @@ const ModalAtenderCita = ({ cita, onCerrar, onAtendida }) => {
         diagnostico: form.diagnostico,
         tratamiento: form.tratamiento,
         codigo_Mascotas: cita.codigo_mascota,
-        cedula_Veterinario: cita.cedula_veterinario,
+        codigo_Veterinario: cita.codigo_veterinario,
         codigo_cita: cita.codigo,
         codigo_especializacion: cita.codigo_especializacion,
       });

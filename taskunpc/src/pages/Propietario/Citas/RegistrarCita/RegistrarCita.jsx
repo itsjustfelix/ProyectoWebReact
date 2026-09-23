@@ -20,7 +20,7 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
     hora: "",
     codigoMascota: "",
     codigoEspecializacion: "",
-    cedulaVeterinario: "",
+    codigoVeterinario: "",
   });
   const [error, setError] = useState("");
   const [guardando, setGuardando] = useState(false);
@@ -48,10 +48,10 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
     traerDatos();
   }, [codigoUsuario]);
 
-  const consultarDisponibilidad = async (cedulaVeterinario, fecha) => {
-    if (!cedulaVeterinario || !fecha) return;
+  const consultarDisponibilidad = async (codigoVeterinario, fecha) => {
+    if (!codigoVeterinario || !fecha) return;
     try {
-      const horasOcupadas = await getHorasOcupadas(fecha, cedulaVeterinario);
+      const horasOcupadas = await getHorasOcupadas(fecha, codigoVeterinario);
       setHorasOcupadas(horasOcupadas);
       setForm((prev) => ({ ...prev, hora: "" }));
     } catch (error) {
@@ -72,15 +72,15 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
         (v) => v.codigo_especializacion === value,
       );
       setVetFiltrados(vetFiltrados);
-      setForm((prev) => ({ ...prev, cedulaVeterinario: "", hora: "" }));
+      setForm((prev) => ({ ...prev, codigoVeterinario: "", hora: "" }));
       setHorasOcupadas([]);
     }
 
-    if (name === "cedulaVeterinario") {
+    if (name === "codigoVeterinario") {
       consultarDisponibilidad(value, form.fecha);
     }
     if (name === "fecha") {
-      consultarDisponibilidad(form.cedulaVeterinario, value);
+      consultarDisponibilidad(form.codigoVeterinario, value);
     }
   };
 
@@ -158,15 +158,15 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
             <div className="modal-form-group modal-full">
               <label>Veterinario</label>
               <select
-                name="cedulaVeterinario"
-                value={form.cedulaVeterinario}
+                name="codigoVeterinario"
+                value={form.codigoVeterinario}
                 onChange={handleChange}
                 required
                 disabled={!form.codigoEspecializacion}
               >
                 <option value="">Selecciona un veterinario...</option>
                 {vetFiltrados.map((v) => (
-                  <option key={v.cedula} value={v.cedula}>
+                  <option key={v.codigo_usuario} value={v.codigo_usuario}>
                     {v.nombre_completo}
                   </option>
                 ))}
@@ -182,7 +182,7 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
                 onChange={handleChange}
                 min={new Date().toISOString().split("T")[0]}
                 required
-                disabled={!form.cedulaVeterinario}
+                disabled={!form.codigoVeterinario}
               />
             </div>
 
@@ -193,7 +193,7 @@ const RegistrarCita = ({ onCerrar, onGuardado }) => {
                 value={form.hora}
                 onChange={handleChange}
                 required
-                disabled={!form.cedulaVeterinario || !form.fecha}
+                disabled={!form.codigoVeterinario || !form.fecha}
               >
                 <option value="">Selecciona una hora...</option>
                 {horasDisponibles

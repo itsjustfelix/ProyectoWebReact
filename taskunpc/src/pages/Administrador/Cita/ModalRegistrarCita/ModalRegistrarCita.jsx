@@ -37,7 +37,7 @@ const ModalRegistrarCitaAdmin = ({ onCerrar, onGuardado }) => {
   const horasDisponibles = generarHorasDisponibles();
   const [form, setForm] = useState({
     codigoEspecializacion: "",
-    cedulaVeterinario: "",
+    codigoVeterinario: "",
     fecha: "",
     hora: "",
   });
@@ -127,16 +127,16 @@ const ModalRegistrarCitaAdmin = ({ onCerrar, onGuardado }) => {
         (v) => v.codigo_especializacion === value,
       );
       setVetFiltrados(filtrados);
-      setForm((prev) => ({ ...prev, cedulaVeterinario: "", hora: "" }));
+      setForm((prev) => ({ ...prev, codigoVeterinario: "", hora: "" }));
       setHorasOcupadas([]);
     }
 
-    if (name === "cedulaVeterinario") {
+    if (name === "codigoVeterinario") {
       consultarDisponibilidad(value, form.fecha);
     }
 
     if (name === "fecha") {
-      consultarDisponibilidad(form.cedulaVeterinario, value);
+      consultarDisponibilidad(form.codigoVeterinario, value);
     }
   };
 
@@ -150,7 +150,7 @@ const ModalRegistrarCitaAdmin = ({ onCerrar, onGuardado }) => {
         hora: form.hora,
         codigoMascota: mascotaSeleccionada.codigo,
         codigoEspecializacion: form.codigoEspecializacion,
-        cedulaVeterinario: form.cedulaVeterinario,
+        codigoVeterinario: form.codigoVeterinario,
       });
       onGuardado();
       onCerrar();
@@ -172,7 +172,7 @@ const ModalRegistrarCitaAdmin = ({ onCerrar, onGuardado }) => {
     setMascotaSeleccionada(null);
     setForm({
       codigoEspecializacion: "",
-      cedulaVeterinario: "",
+      codigoVeterinario: "",
       fecha: "",
       hora: "",
     });
@@ -321,7 +321,7 @@ const ModalRegistrarCitaAdmin = ({ onCerrar, onGuardado }) => {
                   setMascotaSeleccionada(null);
                   setForm({
                     codigoEspecializacion: "",
-                    cedulaVeterinario: "",
+                    codigoVeterinario: "",
                     fecha: "",
                     hora: "",
                   });
@@ -353,15 +353,15 @@ const ModalRegistrarCitaAdmin = ({ onCerrar, onGuardado }) => {
               <div className="modal-form-group modal-full">
                 <label>Veterinario</label>
                 <select
-                  name="cedulaVeterinario"
-                  value={form.cedulaVeterinario}
+                  name="codigoVeterinario"
+                  value={form.codigoVeterinario}
                   onChange={handleChange}
                   required
                   disabled={!form.codigoEspecializacion}
                 >
                   <option value="">Selecciona un veterinario...</option>
                   {vetFiltrados.map((v) => (
-                    <option key={v.cedula} value={v.cedula}>
+                    <option key={v.codigo_usuario} value={v.codigo_usuario}>
                       {v.nombre_completo}
                     </option>
                   ))}
@@ -377,7 +377,7 @@ const ModalRegistrarCitaAdmin = ({ onCerrar, onGuardado }) => {
                   onChange={handleChange}
                   min={new Date().toISOString().split("T")[0]}
                   required
-                  disabled={!form.cedulaVeterinario}
+                  disabled={!form.codigoVeterinario}
                 />
               </div>
 
@@ -388,7 +388,7 @@ const ModalRegistrarCitaAdmin = ({ onCerrar, onGuardado }) => {
                   value={form.hora}
                   onChange={handleChange}
                   required
-                  disabled={!form.cedulaVeterinario || !form.fecha}
+                  disabled={!form.codigoVeterinario || !form.fecha}
                 >
                   <option value="">Selecciona una hora...</option>
                   {horasDisponibles

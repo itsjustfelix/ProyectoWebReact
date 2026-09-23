@@ -9,7 +9,7 @@ import { formatearHora } from "../../../utils/FormatearHora";
 import ModalAtenderCita from "./ModalAtenderCita/ModalAtenderCita";
 
 const Citas = () => {
-  const cedulaVeterinario = localStorage.getItem("codigo_usuario");
+  const codigoUsuario = localStorage.getItem("codigo_usuario");
 
   const [citas, setCitas] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -24,7 +24,7 @@ const Citas = () => {
   const traerCitas = useCallback(async () => {
     try {
       setCargando(true);
-      const citas = await getCitasByVeterionarioAndFecha(cedulaVeterinario);
+      const citas = await getCitasByVeterionarioAndFecha(codigoUsuario);
       setCitas(citas);
     } catch (error) {
       console.error(
@@ -34,11 +34,11 @@ const Citas = () => {
     } finally {
       setCargando(false);
     }
-  }, [cedulaVeterinario]);
+  }, [codigoUsuario]);
 
   useEffect(() => {
-    if (cedulaVeterinario) traerCitas();
-  }, [cedulaVeterinario, traerCitas]);
+    if (codigoUsuario) traerCitas();
+  }, [codigoUsuario, traerCitas]);
 
   const getBadge = (estado) => {
     switch (estado?.toLowerCase()) {
