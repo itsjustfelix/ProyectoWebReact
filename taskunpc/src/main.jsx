@@ -9,7 +9,7 @@ import Mascotas from "./pages/Propietario/Mascotas/Mascotas";
 import Citas from "./pages/Propietario/Citas/Citas";
 import Historial from "./pages/Propietario/Historial/Historial";
 import PropietarioLayout from "./pages/Propietario/PropietarioLayout/PropietarioLayout";
-import AdminLayout from "./pages/Administrador/adminLayout/adminLayout";
+import AdminLayout from "./pages/Administrador/adminLayout/AdminLayout";
 import AdminDashboard from "./pages/Administrador/Dashboard/AdminDashboard";
 import Veterinarios from "./pages/Administrador/Veterinario/Veterinario";
 import Propietarios from "./pages/Administrador/Propietario/Propietario";
