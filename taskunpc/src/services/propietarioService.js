@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "../../api";
 
 export const savePropietario = async (Propietario) => {
   const respuesta = await api.post("/propietarios", Propietario);

@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "../../api";
 
 export const getMascotasByPropietario = async (codigoUsuario) => {
   const respuesta = await api.get(`/mascotas/propietario/${codigoUsuario}`);
