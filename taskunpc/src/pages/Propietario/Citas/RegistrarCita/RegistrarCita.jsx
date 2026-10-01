@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaTimes, FaCalendarAlt } from "react-icons/fa";
-import "../../../../components/Modal/modal.css";
+import "../../../../components/Modal/Modal.css";
 import { getMascotasByPropietario } from "../../../../services/mascotasService";
 import { getEspecializaciones } from "../../../../services/especializacionesService";
 import { getVeterinariosOption } from "../../../../services/veterinarioService";

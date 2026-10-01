@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
 import Logo from "../Logo/Logo";
-import "./Sidebar.css";
+import "./SideBar.css";
 import { logout } from "../../services/loginService";
 
 const Sidebar = ({ links, usuario, rol }) => {
